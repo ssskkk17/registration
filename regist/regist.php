@@ -37,7 +37,8 @@
             <ul>
                 <li>トップ</li>
                 <li>プロフィール</li>
-                <li>D.IBlogについて</li><li>登録フォーム</li>
+                <li>D.IBlogについて</li>
+                <li>登録フォーム</li>
                 <li>問い合わせ</li>
                 <li>その他</li>
             </ul>
@@ -45,7 +46,7 @@
         
         <main>
             <h1>アカウント登録画面</h1>
-            <form method="post"action="regist_confirm.php">
+            <form method="post" action="regist_confirm.php">
                 <div>
                     <label>名前（姓）　　</label>
                     <input type="text"class="text"size="20"name="familyname">
@@ -72,7 +73,7 @@
                 </div>
                 <div>
                     <label>性別</label>
-                    <input type="radio"name="gender"value="男">男
+                    <input type="radio"name="gender"value="男"selected>男
                     <input type="radio"name="gender"value="女">女
                 </div>
                 <div>
@@ -134,7 +135,7 @@
                 </div>
                 <div>
                     <label>住所（市区町村）　　</label>
-                    <input type="text"class="text"size="20"name="zyuusyo">
+                    <input type="text"class="text"size="20"name="shikutyouson">
                 </div>
                 <div>
                     <label>住所（番地）  </label>
@@ -148,7 +149,9 @@
                     </select>
                 </div>
                 <br><br>
-                <button class=""type="button">確認する</button>
+                <div>
+                <input type="submit"class="submit"value="確認する">
+                </div>
             </form>
         </main>
         
