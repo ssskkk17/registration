@@ -20,6 +20,7 @@
             padding-left: 20px;  
         }
         main{
+            margin: 0 auto;
             text-align: center;
         }
         footer {
@@ -82,12 +83,12 @@
                 </div>
                 <div>
                     <label>住所（都道府県）  </label>
-                    <select name="pre">
+                    <select class="dropdown"name="pre">
                         <option value=""selected></option>
-                        <option value="1">北海道</option>
-                        <option value="2">青森県</option>
-                        <option value="3">岩手県</option>
-                        <option value="4">宮城県</option>
+                        <option>北海道</option>
+                        <option>青森県</option>
+                        <option>岩手県</option>
+                        <option>宮城県</option>
                         <option value="5">秋田県</option>
                         <option value="6">山形県</option>
                         <option value="7">福島県</option>
@@ -143,7 +144,7 @@
                 </div>
                 <div>
                     <label>アカウント権限　　</label>
-                    <select name="">
+                    <select class="dropdown"name="authority">
                         <option value="一般"selected>一般</option>
                         <option value="管理者">管理者</option>
                     </select>
