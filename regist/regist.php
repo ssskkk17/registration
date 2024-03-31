@@ -1,17 +1,31 @@
 <?php
+require('./dbconnect.php');
 session_start();
 if(!empty($_POST)) {
     if($_POST['familyname']=='') {
         $error['familyname']='blank';
+    }
+    if($_POST['lastname']=='') {
         $error['lastname']='blank';
+    }
+    if($_POST['kana_family']=='') {
+        $error['kana_family']='blank';
+    }
+    if($_POST['kana_name']=='') {
+        $error['kana_name']='blank';
+    }
+    if($_POST['mail']=='') {
+        $error['mail']='blank';
+    }
+    if($_POST['password']=='') {
+        $error['password']='blank';
     }
     if(empty($error)) {
         $_SESSION['join']=$_POST;
-        header('Location: regist_confirm.php');
+        header('Location:regist_confirm.php');
         exit();
     }
-}
-    
+}   
 ?>
 
 <!DOCTYPE html>
@@ -89,18 +103,30 @@ if(!empty($_POST)) {
                 <div>
                     <label>カナ（姓）　　</label>
                     <input type="text"class="text"size="20"name="kana_family"maxlength="10">
+                    <?php if($error['kana_family']=='blank'): ?>
+                    <p class="error">*カナ（姓）を入力してください*</p>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <label>カナ（名）　　</label>
                     <input type="text"class="text"size="20"name="kana_name"maxlength="10">
+                    <?php if($error['kana_name']=='blank'): ?>
+                    <p class="error">*カナ（名）を入力してください*</p>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <label>メールアドレス　　</label>
                     <input type="text"class="text"size="20"name="mail"maxlength="100">
+                    <?php if($error['mail']=='blank'): ?>
+                    <p class="error">*メールアドレスを入力してください*</p>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <label>パスワード　　</label>
                     <input type="password"name="password"maxlength="10">
+                    <?php if($error['password']=='blank'): ?>
+                    <p class="error">*パスワードを入力してください*</p>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <label>性別</label>
@@ -179,6 +205,7 @@ if(!empty($_POST)) {
                         <option value="1">管理者</option>
                     </select>
                 </div>
+                <?php $registered_time=date('Y-m-d H:i:s'); ?>
                 <div class = "button">
                 <input type="submit"class="submit"value="確認する">
                 </div>

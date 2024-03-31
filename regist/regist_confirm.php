@@ -1,21 +1,11 @@
 <?php
 mb_internal_encoding("utf-8");
-try {
-    $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root", "");
-    } catch (PDOException $e) {
-    echo "DB接続エラー".$e->getMessage();
-    }
 session_start();
-if(!isset($_SESSION['join'])) {
-    header('Location:index.html');
-    exit();
-}
-if(!empty($_POST)) {
-    $statement=$pdo->prepare("INSERT INTO regist_user SET family_name=?, last_name=?");
-    echo $ret=$statement->execute(array($_SESSION['join']['familyname'], $_SESSION['join']['lastname']));
-    unset($_SESSION['join']);
-    
-    header("Location:http://localhost/regist/regist_complete.php");
+if(!empty($_SESSION)) {
+    $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
+    $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, registered_time) values('".$_SESSION['join']['familyname']."', '".$_SESSION['join']['lastname']."', '".$_SESSION['join']['kana_family']."', '".$_SESSION['join']['kana_name']."', '".$_SESSION['join']['mail']."', '".$_SESSION['join']['password']."', '".$_SESSION['join']['gender']."', '".$_SESSION['join']['postalcode']."', '".$_SESSION['join']['pre']."', '".$_SESSION['join']['shikutyouson']."', '".$_SESSION['join']['banchi']."', '".$_SESSION['join']['authority']."', '$registered_time');");
+    header('Location:http:regist_complete.php');
+    session_destroy();
     exit();
 }
 ?>
@@ -90,19 +80,22 @@ if(!empty($_POST)) {
                 </div>
                 <div>
                     <label>カナ（姓）　　</label>
-                    
+                    <?php echo htmlspecialchars($_SESSION['join']['kana_family']); ?>
                 </div>
                 <div>
                     <label>カナ（名）　　</label>
-                    
+                    <?php echo htmlspecialchars($_SESSION['join']['kana_name']); ?>
                 </div>
                 <div>
                     <label>メールアドレス　　</label>
-                    
+                    <?php echo htmlspecialchars($_SESSION['join']['mail']); ?>        
                 </div>
                 <div>
                     <label>パスワード　　</label>
-                    
+                    <?php
+                    $pass="password";
+                    $pass_mask=str_pad("", strlen($pass), "●");
+                    echo htmlspecialchars($_SESSION['join']['password']); ?>
                 </div>
                 <div>
                     <label>性別　　</label>
