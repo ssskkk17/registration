@@ -2,8 +2,10 @@
 mb_internal_encoding("utf-8");
 session_start();
 if(!empty($_SESSION)) {
+    date_default_timezone_set('Asia/Tokyo');
+    $registered_time=date('Y/m/d H:i:s');
     $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
-    $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, registered_time) values('".$_SESSION['join']['familyname']."', '".$_SESSION['join']['lastname']."', '".$_SESSION['join']['kana_family']."', '".$_SESSION['join']['kana_name']."', '".$_SESSION['join']['mail']."', '".$_SESSION['join']['password']."', '".$_SESSION['join']['gender']."', '".$_SESSION['join']['postalcode']."', '".$_SESSION['join']['pre']."', '".$_SESSION['join']['shikutyouson']."', '".$_SESSION['join']['banchi']."', '".$_SESSION['join']['authority']."', '$registered_time');");
+    $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, gender, postal_code, prefecture, address_1, address_2, authority, registered_time) values('".$_SESSION['join']['familyname']."', '".$_SESSION['join']['lastname']."', '".$_SESSION['join']['kana_family']."', '".$_SESSION['join']['kana_name']."', '".$_SESSION['join']['mail']."', '".$_SESSION['join']['gender']."', '".$_SESSION['join']['postalcode']."', '".$_SESSION['join']['pre']."', '".$_SESSION['join']['shikutyouson']."', '".$_SESSION['join']['banchi']."', '".$_SESSION['join']['authority']."', '$registered_time');");
     header('Location:http:regist_complete.php');
     session_destroy();
     exit();
@@ -93,38 +95,36 @@ if(!empty($_SESSION)) {
                 <div>
                     <label>パスワード　　</label>
                     <?php
-                    $pass="password";
-                    $pass_mask=str_pad("", strlen($pass), "●");
+                    $pass=$_SESSION['password'];
+                    $pass_mask=str_pad("", strlen($pass), "*");
                     echo htmlspecialchars($_SESSION['join']['password']); ?>
                 </div>
                 <div>
                     <label>性別　　</label>
-                    
+                    <?php echo htmlspecialchars($_SESSION['join']['gender']); ?>
                 </div>
                 <div>
                     <label>郵便番号　　</label>
-                    
+                    <?php echo htmlspecialchars($_SESSION['join']['postalcode']); ?>
                 </div>
                 <div>
                     <label>住所（都道府県）　　</label>
-                    
+                    <?php echo htmlspecialchars($_SESSION['join']['pre']); ?>
                 </div>
                 <div>
                     <label>住所（市区町村）　　</label>
-                    
+                    <?php echo htmlspecialchars($_SESSION['join']['shikutyouson']); ?>
                 </div>
                 <div>
                     <label>住所（番地）　　</label>
-                    
+                    <?php echo htmlspecialchars($_SESSION['join']['banchi']); ?>
                 </div>
                 <div>
                     <label>アカウント権限</label>
-                    
+                    <?php echo htmlspecialchars($_SESSION['join']['authority']); ?>
                 </div>
                 <br>
-                <div class="button">
-                    <input type="submit"class="submit"value="送信">
-                </div>
+                <input type="submit"class="submit"value="送信">
             </form>
         </main>
         <footer>

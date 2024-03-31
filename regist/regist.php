@@ -20,6 +20,24 @@ if(!empty($_POST)) {
     if($_POST['password']=='') {
         $error['password']='blank';
     }
+    if($_POST['gender']=='') {
+        $error['gender']='blank';
+    }
+    if($_POST['postalcode']=='') {
+        $error['postalcode']='blank';
+    }
+    if($_POST['pre']=='') {
+        $error['pre']='blank';
+    }
+    if($_POST['shikutyouson']=='') {
+        $error['shikutyouson']='blank';
+    }
+    if($_POST['banchi']=='') {
+        $error['banchi']='blank';
+    }
+    if($_POST['authority']=='') {
+        $error['authority']='blank';
+    }
     if(empty($error)) {
         $_SESSION['join']=$_POST;
         header('Location:regist_confirm.php');
@@ -88,7 +106,7 @@ if(!empty($_POST)) {
             <form method="post" action="">
                 <div>
                     <label>名前（姓）　　</label>
-                    <input type="text"class="text"size="20"name="familyname"maxlength="10">
+                    <input type="text"class="text"size="20"name="familyname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309F-]*">
                     <?php if($error['familyname']=='blank'): ?>
                     <p class="error">*名前（姓）を入力してください*</p>
                     <?php endif; ?>
@@ -130,12 +148,18 @@ if(!empty($_POST)) {
                 </div>
                 <div>
                     <label>性別</label>
-                    <input type="radio"name="gender"value="man"checked>男
-                    <input type="radio"name="gender"value="woman">女
+                    <input type="radio"name="gender"checked>男
+                    <input type="radio"name="gender">女
+                    <?php if($error['gender']=='blank'): ?>
+                    <p class="error">*性別を選択してください*</p>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <label>郵便番号　　</label>
                     <input type="text"class="text"size="10"name="postalcode"maxlength="7">
+                    <?php if($error['postalcode']=='blank'): ?>
+                    <p class="error">*郵便番号を入力してください*</p>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <label>住所（都道府県）  </label>
@@ -189,24 +213,35 @@ if(!empty($_POST)) {
                         <option>鹿児島県</option>
                         <option>沖縄県</option>
                     </select>
+                    <?php if($error['pre']=='blank'): ?>
+                    <p class="error">*都道府県を選択してください*</p>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <label>住所（市区町村）　　</label>
-                    <input type="text"class="text"size="20"name="shikutyouson"maxlength="10">
+                    <input type="text"class="text"size="20"name="shikutyouson"maxlength="10"pattern="[-\u4E00-\u9fff\u3040-\u309F~\uFF66-\uFF9F\u30A1-\u30F60-90-9_\s]*">
+                    <?php if($error['shikutyouson']=='blank'): ?>
+                    <p class="error">*住所（市区町村）を入力してください*</p>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <label>住所（番地）  </label>
-                    <input type="text"class="text"size="20"name="banchi"maxlength="100">
+                    <input type="text"class="text"size="20"name="banchi"maxlength="100"patttern="[-\u4E00-\u9fff\u3040-\u309F~\uFF66-\uFF9F\u30A1-\u30F60-90-9_\s]*">
+                    <?php if($error['banchi']=='blank'): ?>
+                    <p class="error">*住所（番地）を入力してください*</p>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <label>アカウント権限　　</label>
                     <select class="dropdown"name="authority">
                         <option value="0"selected>一般</option>
                         <option value="1">管理者</option>
+                        <?php if($error['authority']=='blank'): ?>
+                        <p class="error">*アカウント権限を選択してください*</p>
+                        <?php endif; ?>
                     </select>
                 </div>
-                <?php $registered_time=date('Y-m-d H:i:s'); ?>
-                <div class = "button">
+                <div class="button">
                 <input type="submit"class="submit"value="確認する">
                 </div>
             </form>
