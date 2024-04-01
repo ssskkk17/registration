@@ -2,7 +2,11 @@
 <html lang="ja">
     <head>
         <title>アカウント登録完了画面</title>
-        <style></style>
+        <style>
+        h1 {
+            color: red;
+            font-size: 50px;
+            }</style>
     </head>
     <body>
         <header>
