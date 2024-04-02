@@ -140,6 +140,7 @@ if(!empty($error)) {
                     <?php echo htmlspecialchars($_SESSION['authority']); ?>
                 </div>
                 <br>
+                <button type="button" onclick="location.href='localhost/regist/regist.php'">戻って修正する</button>
                 <input type="submit"class="submit"value="送信">
             </form>
         </main>

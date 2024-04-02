@@ -5,7 +5,8 @@
         <style>
         h1 {
             color: red;
-            font-size: 50px;
+            font-size: 100px;
+            text-align: center;
             }</style>
     </head>
     <body>
