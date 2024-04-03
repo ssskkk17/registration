@@ -1,32 +1,7 @@
 <?php
 require('./dbconnect.php');
-$familyname='';
-$lastname='';
-$kana_family='';
-$kana_name='';
-$mail='';
-$password='';
-$gender='';
-$postalcode='';
-$pre='';
-$shikutyouson='';
-$banchi='';
-$authority='';
-$error=[];
-if(!empty($_POST)) {
-    $familyname=$_POST['familyname'];
-    $lastname=$_POST['lastname'];
-    $kana_family=$_POST['kana_family'];
-    $kana_name=$_POST['kana_name'];
-    $mail=$_POST['mail'];
-    $password=$_POST['password'];
-    $gender=$_POST['gender'];
-    $postalcode=$_POST['postalcode'];
-    $pre=$_POST['pre'];
-    $shikutyouson=$_POST['shikutyouson'];
-    $banchi=$_POST['banchi'];
-    $authority=$_POST['authority'];
-}
+session_start();
+$familyname=$_SESSION['familyname'];
 ?>
 
 <!DOCTYPE html>
@@ -90,32 +65,32 @@ if(!empty($_POST)) {
             <form method="post"action="regist_confirm.php">
                 <div>
                     <label>名前（姓）　　</label>
-                    <input type="text"class="text"size="20"name="familyname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php echo $familyname; ?>">
-                    <?php if($_POST['familyname']='') { echo "*名前（姓）を入力してください*"; } ?>
+                    <input type="text"class="text"size="20"name="familyname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php $familyname ?>">
+                    <?php if(empty($_POST['familyname']=='')) { echo "*名前（姓）を入力してください*"; }?>
                 </div>
                 <div>
                     <label>名前（名）　　</label>
-                    <input type="text"class="text"size="20"name="lastname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php echo $lastname; ?>">
-                    <?php if($_POST['lastname']='') { echo "*名前（名）を入力してください*"; } ?>
+                    <input type="text"class="text"size="20"name="lastname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*">
+                    <?php if(empty($_POST['lastname']=='')) { echo "*名前（名）を入力してください*"; }?>
                 </div>
                 <div>
                     <label>カナ（姓）　　</label>
-                    <input type="text"class="text"size="20"name="kana_family"maxlength="10"pattern="^[ァ-ンヴー]+$"value="<?php echo $kana_family; ?>">
+                    <input type="text"class="text"size="20"name="kana_family"maxlength="10"pattern="^[ァ-ンヴー]+$">
                     <?php if($_POST['kana_family']='') { echo "*カナ（姓）を入力してください*"; } ?>
                 </div>
                 <div>
                     <label>カナ（名）　　</label>
-                    <input type="text"class="text"size="20"name="kana_name"maxlength="10"pattern="^[ァ-ンヴー]+$"value="<?php echo $kana_name; ?>">
+                    <input type="text"class="text"size="20"name="kana_name"maxlength="10"pattern="^[ァ-ンヴー]+$">
                     <?php if($_POST['kana_name']='') { echo "*カナ（名）を入力してください*"; } ?>
                 </div>
                 <div>
                     <label>メールアドレス　　</label>
-                    <input type="text"class="text"size="20"name="mail"maxlength="100"pattern="^[-@a-zA-Z0-9]+$"value="<?php echo $mail; ?>">
+                    <input type="text"class="text"size="20"name="mail"maxlength="100"pattern="^[-@a-zA-Z0-9]+$">
                     <?php if($_POST['mail']='') { echo "*メールアドレスを入力してください*"; } ?>
                 </div>
                 <div>
                     <label>パスワード　　</label>
-                    <input type="password"name="password"maxlength="10"pattern="^[a-zA-Z0-9]+$"value="<?php echo $password; ?>">
+                    <input type="password"name="password"maxlength="10"pattern="^[a-zA-Z0-9]+$">
                     <?php if($_POST['password']='') { echo "*パスワードを入力してください*"; } ?>
                 </div>
                 <div>
@@ -126,7 +101,7 @@ if(!empty($_POST)) {
                 </div>
                 <div>
                     <label>郵便番号　　</label>
-                    <input type="text"class="text"size="10"name="postalcode"maxlength="7"pattern="\d*"value="<?php echo $postalcode; ?>">
+                    <input type="text"class="text"size="10"name="postalcode"maxlength="7"pattern="\d*">
                     <?php if($_POST['postalcode']='') { echo "*郵便番号を入力してください*"; } ?>
                 </div>
                 <div>
@@ -185,12 +160,12 @@ if(!empty($_POST)) {
                 </div>
                 <div>
                     <label>住所（市区町村）　　</label>
-                    <input type="text"class="text"size="20"name="shikutyouson"maxlength="10"pattern="[-\u4E00-\u9fff\u3040-\u309F~\uFF66-\uFF9F\u30A1-\u30F60-90-9_\s]*"value="<?php echo $shikutyouson ?>">
+                    <input type="text"class="text"size="20"name="shikutyouson"maxlength="10"pattern="[-\u4E00-\u9fff\u3040-\u309F~\uFF66-\uFF9F\u30A1-\u30F60-90-9_\s]*">
                     <?php if($_POST['shikutyouson']='') { echo "*住所（市区町村）を入力してください*"; } ?>
                 </div>
                 <div>
                     <label>住所（番地）  </label>
-                    <input type="text"class="text"size="20"name="banchi"maxlength="100"patttern="[-\u4E00-\u9fff\u3040-\u309F~\uFF66-\uFF9F\u30A1-\u30F60-90-9_\s]*"value="<?php echo $banchi ?>">
+                    <input type="text"class="text"size="20"name="banchi"maxlength="100"patttern="[-\u4E00-\u9fff\u3040-\u309F~\uFF66-\uFF9F\u30A1-\u30F60-90-9_\s]*">
                     <?php if($_POST['banchi']='') { echo "*住所（番地）を入力してください*"; } ?>
                 </div>
                 <div>
@@ -202,7 +177,7 @@ if(!empty($_POST)) {
                     </select>
                 </div>
                 <div class="button">
-                <input type="submit"class="submit"value="確認する">
+                <input type="submit"name="confirm"value="確認する">
                 </div>
             </form>
             </div>
