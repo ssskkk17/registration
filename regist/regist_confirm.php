@@ -1,20 +1,28 @@
 <?php
 require("./dbconnect.php");
-session_start();
-if(empty($_POST)) {
+$error=[];
+// POST に使いたいデータが１つでも入っていない場合は、エラーとして入力画面にもどる
+    if($_POST['familyname']=='') {
+    $error['familyname']='blank';
+    }
+if(!empty($error)) {
+    session_start();
     $_SESSION['familyname']=$_POST['familyname'];
     $_SESSION['lastname']=$_POST['lastname'];
-    $_SESSION=array();
-    header('Location:regist.php');
+    $_SESSION['error']=$error;
+    header('Location:regist.php');// リダイレクトされる
+    exit();
 } else {
+    // POST に使いたいデータが全て正しく入っている場合は、インサートして完了画面に進む
     $_SESSION=array();
     $passhash=password_hash($_POST['password'], PASSWORD_DEFAULT);
     date_default_timezone_set('Asia/Tokyo');
     $registered_time=date('Y/m/d H:i:s');
     $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
     $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, registered_time) values('".$_POST['familyname']."', '".$_POST['lastname']."', '".$_POST['kana_family']."', '".$_POST['kana_name']."', '".$_POST['mail']."', '$passhash', '".$_POST['gender']."', '".$_POST['postalcode']."', '".$_POST['pre']."', '".$_POST['shikutyouson']."', '".$_POST['banchi']."', '".$_POST['authority']."', '$registered_time');");
-    header('Location:regist_complete.php');
 }
+
+// 以下のページは表示されない
 ?>
 
 <!DOCTYPE html>
@@ -76,10 +84,10 @@ if(empty($_POST)) {
             <p>入力した内容はこちらでよろしいでしょうか。</p>
             よろしければ「送信」を押してください。
             <br>
-            <form method="post"action="">
+            <form method="post"action="regist_complete.php">
                 <div>
                     <label>名前（姓）　　</label>
-                    <?php echo $_SESSION['lastname']; ?>
+                    <?php echo $_POST['familyname']; ?>
                 </div>
                 <div>
                     <label>名前（名）　　</label>

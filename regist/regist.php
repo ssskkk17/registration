@@ -1,7 +1,10 @@
 <?php
-require('./dbconnect.php');
-session_start();
-$familyname=$_SESSION['familyname'];
+$error=[];
+if($_SERVER['REQUEST_METHOD']=='POST') {
+    if($_POST['familyname']=='') {
+    $error['familyname']='blank';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -65,13 +68,15 @@ $familyname=$_SESSION['familyname'];
             <form method="post"action="regist_confirm.php">
                 <div>
                     <label>名前（姓）　　</label>
-                    <input type="text"class="text"size="20"name="familyname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php $familyname ?>">
-                    <?php if(empty($_POST['familyname']=='')) { echo "*名前（姓）を入力してください*"; }?>
+                    <input type="text"class="text"size="20"name="familyname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*">
+                    <?php if(!$error['familyname']=='blank'): ?>
+                    <div class="error"><?php echo "*名前（姓）を入力してください*"; ?></div>
+                    <?php endif; ?>
                 </div>
                 <div>
                     <label>名前（名）　　</label>
                     <input type="text"class="text"size="20"name="lastname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*">
-                    <?php if(empty($_POST['lastname']=='')) { echo "*名前（名）を入力してください*"; }?>
+                    <?php if($_POST['lastname'])echo "*名前（名）を入力してください*" ?>
                 </div>
                 <div>
                     <label>カナ（姓）　　</label>
