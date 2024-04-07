@@ -1,27 +1,43 @@
 <?php
 require("./dbconnect.php");
 $error=[];
-// POST に使いたいデータが１つでも入っていない場合は、エラーとして入力画面にもどる
-    if($_POST['familyname']=='') {
+if($_POST['familyname']=='') {
     $error['familyname']='blank';
-    }
+}
+if($_POST['lastname']=='') {
+    $error['lastname']='blank';
+}
+if($_POST['kana_family']=='') {
+    $error['kana_family']='blank';
+}
+if($_POST['kana_name']=='') {
+    $error['kana_name']='blank';
+}
+if($_POST['mail']=='') {
+    $error['mail']='blank';
+}
+if($_POST['password']=='') {
+    $error['password']='blank';
+}
+if($_POST['postalcode']=='') {
+    $error['postalcode']='blank';
+}
+if($_POST['pre']=='') {
+    $error['pre']='blank';
+}
+if($_POST['shikutyouson']=='') {
+    $error['shikutyouson']='blank';
+}
+if($_POST['banchi']=='') {
+    $error['banchi']='blank';
+}
 if(!empty($error)) {
     session_start();
     $_SESSION['familyname']=$_POST['familyname'];
     $_SESSION['lastname']=$_POST['lastname'];
-    $_SESSION['error']=$error;
     header('Location:regist.php');// リダイレクトされる
     exit();
-} else {
-    // POST に使いたいデータが全て正しく入っている場合は、インサートして完了画面に進む
-    $_SESSION=array();
-    $passhash=password_hash($_POST['password'], PASSWORD_DEFAULT);
-    date_default_timezone_set('Asia/Tokyo');
-    $registered_time=date('Y/m/d H:i:s');
-    $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
-    $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, registered_time) values('".$_POST['familyname']."', '".$_POST['lastname']."', '".$_POST['kana_family']."', '".$_POST['kana_name']."', '".$_POST['mail']."', '$passhash', '".$_POST['gender']."', '".$_POST['postalcode']."', '".$_POST['pre']."', '".$_POST['shikutyouson']."', '".$_POST['banchi']."', '".$_POST['authority']."', '$registered_time');");
 }
-
 // 以下のページは表示されない
 ?>
 
@@ -107,8 +123,8 @@ if(!empty($error)) {
                 </div>
                 <div>
                     <label>パスワード　　</label>
-                    <?php echo $pass_mask='';
-                    $pass_mask=str_pad("", strlen($_POST['password']), "●"); ?>             
+                    <?php echo $_POST['password'];
+                    ?>
                 </div>
                 <div>
                     <label>性別　　</label>
@@ -131,15 +147,24 @@ if(!empty($error)) {
                     <?php echo htmlspecialchars($_POST['banchi']); ?>
                 </div>
                 <div>
-                    <label>アカウント権限</label>
+                    <label>アカウント権限    </label>
                     <?php echo htmlspecialchars($_POST['authority']); ?>
                 </div>
                 <br>
                 <input type="button"name="back"value="戻る"onclick="history.back()">
                 <input type="submit"name="send"value="送信"/>
             </form>
+            <?php if(empty($error)) {
+    $_SESSION=array();
+    date_default_timezone_set('Asia/Tokyo');
+    $registered_time=date('Y/m/d H:i:s');
+    $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
+    $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, registered_time) values('".$_POST['familyname']."', '".$_POST['lastname']."', '".$_POST['kana_family']."', '".$_POST['kana_name']."', '".$_POST['mail']."', '$pass', ".$_POST['gender']."', '".$_POST['postalcode']."', '".$_POST['pre']."', '".$_POST['shikutyouson']."', '".$_POST['banchi']."', '".$_POST['authority']."', '$registered_time');");
+}
+            ?>
         </main>
         <footer>
         </footer>
+        
     </body>
 </html>
