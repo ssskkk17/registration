@@ -1,44 +1,72 @@
 <?php
 require("./dbconnect.php");
 $error=[];
+session_start();
 if($_POST['familyname']=='') {
     $error['familyname']='blank';
+} else {
+    $_SESSION['familyname']=$_POST['familyname'];
 }
+
 if($_POST['lastname']=='') {
     $error['lastname']='blank';
+} else {
+    $_SESSION['lastname']=$_POST['lastname'];
 }
+
 if($_POST['kana_family']=='') {
     $error['kana_family']='blank';
+} else {
+    $_SESSION['kana_family']=$_POST['kana_family'];
 }
+
 if($_POST['kana_name']=='') {
     $error['kana_name']='blank';
+} else {
+    $_SESSION['kana_name']=$_POST['kana_name'];
 }
+
 if($_POST['mail']=='') {
     $error['mail']='blank';
+} else {
+    $_SESSION['mail']=$_POST['mail'];
 }
+
 if($_POST['password']=='') {
     $error['password']='blank';
+} else {
+    $_SESSION['password']=$_POST['password'];
 }
+
 if($_POST['postalcode']=='') {
     $error['postalcode']='blank';
+} else {
+    $_SESSION['postalcode']=$_POST['postalcode'];
 }
+
 if($_POST['pre']=='') {
     $error['pre']='blank';
+} else {
+    $_SESSION['pre']=$_POST['pre'];
 }
+
 if($_POST['shikutyouson']=='') {
     $error['shikutyouson']='blank';
+} else {
+    $_SESSION['shikutyouson']=$_POST['shikutyouson'];
 }
+
 if($_POST['banchi']=='') {
     $error['banchi']='blank';
+} else {
+    $_SESSION['banchi']=$_POST['banchi'];
 }
+$_SESSION['gender']=$_POST['gender'];
+$_SESSION['authority']=$_POST['authority'];
 if(!empty($error)) {
-    session_start();
-    $_SESSION['familyname']=$_POST['familyname'];
-    $_SESSION['lastname']=$_POST['lastname'];
     header('Location:regist.php');// リダイレクトされる
     exit();
 }
-// 以下のページは表示されない
 ?>
 
 <!DOCTYPE html>
@@ -72,9 +100,7 @@ if(!empty($error)) {
         form div {
             padding: 10px;
         }
-        .button {
-            text-align: center;
-        }
+        
         footer {
             background-color: black;
             height: 50px;
@@ -103,7 +129,7 @@ if(!empty($error)) {
             <form method="post"action="regist_complete.php">
                 <div>
                     <label>名前（姓）　　</label>
-                    <?php echo $_POST['familyname']; ?>
+                    <?php echo htmlspecialchars($_POST['familyname']); ?>
                 </div>
                 <div>
                     <label>名前（名）　　</label>
@@ -123,7 +149,8 @@ if(!empty($error)) {
                 </div>
                 <div>
                     <label>パスワード　　</label>
-                    <?php echo $_POST['password'];
+                    <?php $pass=$_POST['password'];
+                    echo str_repeat('●', strlen($pass)), PHP_EOL;
                     ?>
                 </div>
                 <div>
@@ -151,16 +178,20 @@ if(!empty($error)) {
                     <?php echo htmlspecialchars($_POST['authority']); ?>
                 </div>
                 <br>
-                <input type="button"name="back"value="戻る"onclick="history.back()">
-                <input type="submit"name="send"value="送信"/>
+                <div class="send">
+                    <input type="submit"name="send"value="送信"/>
+                </div>
+            </form>
+            <form method="post"action="regist.php">
+                <input type="submit"value="戻る"/>
             </form>
             <?php if(empty($error)) {
-    $_SESSION=array();
-    date_default_timezone_set('Asia/Tokyo');
-    $registered_time=date('Y/m/d H:i:s');
-    $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
-    $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, registered_time) values('".$_POST['familyname']."', '".$_POST['lastname']."', '".$_POST['kana_family']."', '".$_POST['kana_name']."', '".$_POST['mail']."', '$pass', ".$_POST['gender']."', '".$_POST['postalcode']."', '".$_POST['pre']."', '".$_POST['shikutyouson']."', '".$_POST['banchi']."', '".$_POST['authority']."', '$registered_time');");
-}
+                $passhash=password_hash($_POST['password'], PASSWORD_DEFAULT);
+                date_default_timezone_set('Asia/Tokyo');
+                $registered_time=date('Y/m/d H:i:s');
+                $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
+                $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, registered_time) values('".$_POST['familyname']."', '".$_POST['lastname']."', '".$_POST['kana_family']."', '".$_POST['kana_name']."', '".$_POST['mail']."', '$passhash', '".$_POST['gender']."', '".$_POST['postalcode']."', '".$_POST['pre']."', '".$_POST['shikutyouson']."', '".$_POST['banchi']."', '".$_POST['authority']."', '$registered_time');");
+            }
             ?>
         </main>
         <footer>
