@@ -74,11 +74,19 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
         form div {
             padding: 10px;
         }
-        .error {
+        form label {
+            display: inline-block;
+            width: 150px;
+            vertical-align: top;
+        }
+        .div .error {
             color: red;
         }
         .button {
-            text-align: center;
+            height: 30px;
+            width: 100px;
+            border-style: solid;
+            margin-left: 100px;
         }
         footer {
             background-color: black;
@@ -148,9 +156,9 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
                     <?php endif; ?>
                 </div>
                 <div>
-                    <label>性別</label>
+                    <label>性別    </label>
                     <input type="radio"name="gender"value="男"checked>男
-                    <input type="radio"name="gender"value="女"<?php if(!empty($_SESSION['gender']) && $_SESSION['gender']=="女"){"checked";}?>>女
+                    <input type="radio"name="gender"value="女"<?php if(!empty($_SESSION['gender']) && $_SESSION['gender']=="女") echo 'checked'?>>女
                 </div>
                 <div>
                     <label>郵便番号　　</label>
@@ -236,12 +244,12 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
                         <option value="管理者"<?php if(!empty($_SESSION['authority']) && $_SESSION['authority']=="管理者") {echo "selected";}?>>管理者</option>
                     </select>
                 </div>
-                <div class="button">
-                <input type="submit"name="confirm"value="確認する">
-                </div>
+                <br>
+                <input type="submit"class="button"name="confirm"value="確認する">
             </form>
             </div>
         </main>
+        <br>
         <footer>
         </footer>
     </body>

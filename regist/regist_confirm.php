@@ -61,19 +61,20 @@ if($_POST['banchi']=='') {
 } else {
     $_SESSION['banchi']=$_POST['banchi'];
 }
+
 if($_POST['gender']=="女") {
     $_SESSION['gender']=$_POST['gender'];
 }
+
 $_SESSION['authority']=$_POST['authority'];
 if(!empty($error)) {
-    header('Location:regist.php');// リダイレクトされる
+    header('Location:regist.php');
     exit();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="utf-8">
     <title>入力内容確認画面</title>
@@ -92,9 +93,6 @@ if(!empty($error)) {
             list-style-type: none;
             padding-left: 20px;  
         }
-        main {
-            margin: 0 auto;
-        }
         form {
             margin: 0 auto;
             width: 500px;
@@ -102,8 +100,33 @@ if(!empty($error)) {
         form div {
             padding: 10px;
         }
-        
+        form label {
+            display: inline-block;
+            width: 150px;
+            vertical-align: top;
+        }
+        form .send {
+            float: right;
+        }
+        .back {
+            float: right;
+        }
+        .send .button {
+            font-size: 20px;
+            height: 30px;
+            width: 150px;
+            border-style: solid;
+            margin-right: 100px;
+        }
+        .back .button {
+            font-size: 20px;
+            height: 30px;
+            width: 150px;
+            border-style: solid;
+            margin-left: 250px;
+        }
         footer {
+            clear: both;
             background-color: black;
             height: 50px;
             width: 100%;
@@ -111,7 +134,6 @@ if(!empty($error)) {
         }
     </style>
 </head>
-    
     <body>
         <header>
             <ul>
@@ -126,7 +148,7 @@ if(!empty($error)) {
         <main>
             <h1>アカウント登録確認画面</h1>
             <p>入力した内容はこちらでよろしいでしょうか。</p>
-            よろしければ「送信」を押してください。
+            よろしければ「登録する」を押してください。
             <br>
             <form method="post"action="regist_complete.php">
                 <div>
@@ -181,23 +203,24 @@ if(!empty($error)) {
                 </div>
                 <br>
                 <div class="send">
-                    <input type="submit"name="send"value="送信"/>
+                    <input type="submit"class="button"name="send"value="登録する">
                 </div>
             </form>
-            <form method="post"action="regist.php">
-                <input type="submit"value="戻る"/>
-            </form>
+            <div class="back">
+                <form method="post"action="regist.php">
+                    <input type="submit"class="button"value="前に戻る">
+                </form>
+            </div>
             <?php if(empty($error)) {
                 $passhash=password_hash($_POST['password'], PASSWORD_DEFAULT);
                 date_default_timezone_set('Asia/Tokyo');
                 $registered_time=date('Y/m/d H:i:s');
                 $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
                 $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, registered_time) values('".$_POST['familyname']."', '".$_POST['lastname']."', '".$_POST['kana_family']."', '".$_POST['kana_name']."', '".$_POST['mail']."', '$passhash', '".$_POST['gender']."', '".$_POST['postalcode']."', '".$_POST['pre']."', '".$_POST['shikutyouson']."', '".$_POST['banchi']."', '".$_POST['authority']."', '$registered_time');");
-            }
+             }
             ?>
         </main>
         <footer>
         </footer>
-        
     </body>
 </html>
