@@ -45,7 +45,7 @@ if($_POST['postalcode']=='') {
 }
 
 if($_POST['pre']=='') {
-    $error['pre']='blank';
+    $error['pre']="blank";
 } else {
     $_SESSION['pre']=$_POST['pre'];
 }
@@ -61,7 +61,9 @@ if($_POST['banchi']=='') {
 } else {
     $_SESSION['banchi']=$_POST['banchi'];
 }
-$_SESSION['gender']=$_POST['gender'];
+if($_POST['gender']=="女") {
+    $_SESSION['gender']=$_POST['gender'];
+}
 $_SESSION['authority']=$_POST['authority'];
 if(!empty($error)) {
     header('Location:regist.php');// リダイレクトされる
