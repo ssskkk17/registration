@@ -64,9 +64,16 @@ if($_POST['banchi']=='') {
 
 if($_POST['gender']=="女") {
     $_SESSION['gender']=$_POST['gender'];
+} else {
+    $_SESSION['gender']=$_POST['gender'];
+}
+if($_POST['authority']=="一般") {
+    $_SESSION['authority']=$_POST['authority'];
+}
+if($_POST['authority']=="管理者") {
+    $_SESSION['authority']=$_POST['authority'];
 }
 
-$_SESSION['authority']=$_POST['authority'];
 if(!empty($error)) {
     header('Location:regist.php');
     exit();
@@ -199,7 +206,8 @@ if(!empty($error)) {
                 </div>
                 <div>
                     <label>アカウント権限    </label>
-                    <?php echo htmlspecialchars($_POST['authority']); ?>
+                    <?php echo $_POST['authority'];
+                    ?>
                 </div>
                 <br>
                 <div class="send">
@@ -211,14 +219,6 @@ if(!empty($error)) {
                     <input type="submit"class="button"value="前に戻る">
                 </form>
             </div>
-            <?php if(empty($error)) {
-                $passhash=password_hash($_POST['password'], PASSWORD_DEFAULT);
-                date_default_timezone_set('Asia/Tokyo');
-                $registered_time=date('Y/m/d H:i:s');
-                $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
-                $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, registered_time) values('".$_POST['familyname']."', '".$_POST['lastname']."', '".$_POST['kana_family']."', '".$_POST['kana_name']."', '".$_POST['mail']."', '$passhash', '".$_POST['gender']."', '".$_POST['postalcode']."', '".$_POST['pre']."', '".$_POST['shikutyouson']."', '".$_POST['banchi']."', '".$_POST['authority']."', '$registered_time');");
-             }
-            ?>
         </main>
         <footer>
         </footer>

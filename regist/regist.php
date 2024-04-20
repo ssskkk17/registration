@@ -79,7 +79,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
             width: 150px;
             vertical-align: top;
         }
-        .div .error {
+        .error {
             color: red;
         }
         .button {
@@ -225,14 +225,14 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
                 </div>
                 <div>
                     <label>住所（市区町村）　　</label>
-                    <input type="text"class="text"size="20"name="shikutyouson"maxlength="10"pattern="[-\u4E00-\u9fff\u3040-\u309F~\uFF66-\uFF9F\u30A1-\u30F60-90-9_\s]*"value="<?php if(!empty($_SESSION['shikutyouson'])) {echo $_SESSION['shikutyouson'];}?>">
+                    <input type="text"class="text"size="20"name="shikutyouson"maxlength="10"pattern="^[^A-Za-z]+$"value="<?php if(!empty($_SESSION['shikutyouson'])) {echo $_SESSION['shikutyouson'];}?>">
                     <?php if(empty($error['shikutyouson']) && empty($_SESSION['shikutyouson'])): ?>
                     <div class="error"><?php echo "*住所（市区町村）を入力してください*"; ?></div>
                     <?php endif; ?>
                 </div>
                 <div>
                     <label>住所（番地）  </label>
-                    <input type="text"class="text"size="20"name="banchi"maxlength="100"patttern="[-\u4E00-\u9fff\u3040-\u309F~\uFF66-\uFF9F\u30A1-\u30F60-90-9_\s]*"value="<?php if(!empty($_SESSION['banchi'])) {echo $_SESSION['banchi'];}?>">
+                    <input type="text"class="text"size="20"name="banchi"maxlength="100"patttern="^[^A-Za-z]+$"value="<?php if(!empty($_SESSION['banchi'])) {echo $_SESSION['banchi'];}?>">
                     <?php if(empty($error['banchi']) && empty($_SESSION['banchi'])): ?>
                     <div class="error"><?php echo "*住所（番地）を入力してください*"; ?></div>
                     <?php endif; ?>
