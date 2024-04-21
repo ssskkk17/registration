@@ -2,7 +2,6 @@
 mb_internal_encoding("utf8");
 $pdo=new PDO("mysql:dbname=regist; host=localhost;", "root", "");
 $stmt=$pdo->query("select * from regist_user order by id desc");
-
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +25,8 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                 padding-left: 20px;  
             }
             table {
-                width: 100%;
+                width: 90%;
+                margin: auto;
             }
             table td {
                 padding: 0auto;
@@ -68,8 +68,9 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                     <th>更新日時</th>
                     <th colspan="2">操作</th>
                 </tr>
-                    <?php echo "<tr>\n";
-                    foreach($stmt as $row) {
+                <?php
+                echo "<tr>\n";
+                foreach($stmt as $row) {
                     echo "<td align='right'>"; echo $row['id']; echo "</td>";
                     echo "<td align='right'>"; echo $row['family_name']; echo "</td>";
                     echo "<td align='right'>"; echo $row['last_name']; echo "</td>";
@@ -79,7 +80,9 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                     echo "<td align='center'>"; echo $row['gender']; echo "</td>";
                     echo "<td align='center'>"; if($row['authority']=="0") {echo "一般";} else {echo "管理者";} echo "</td>";
                     echo "<td align='center'>"; if($row['delete_flag']=="0") {echo "有効";} else {echo "無効";} echo "</td>";
-                    echo "<td align='center'>"; echo $row['registered_time']; echo "</td>";
+                    echo "<td align='center'>"; 
+                    $ts=strtotime($row['registered_time']);
+                    echo date('Y/m/d', $ts);echo "</td>";
                     echo "<td align='center'>"; echo $row['update_time']; echo "</td>";
                     echo "<td align='center'>";
                     echo '<form method="post"action="delete.php">';
@@ -92,9 +95,11 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                     echo "</form>";
                     echo "</td>";
                     echo "</tr>\n";
-                    }?>
+                    }
+                ?>
             </table>
         </main>
+        <br>
         
         <footer>
         </footer>

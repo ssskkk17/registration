@@ -8,13 +8,7 @@ if(empty($error)) {
     } else {
         $authority=0;
     }
-    $deleteflag='';
-    if(!empty($deleteflag) && $deleteflag==0) {
-        $deleteflag==0;//有効
-    }
-    if(!empty($deleteflag) && $deleteflag==1) {
-        $deleteflag==1;//無効
-    }
+    $deleteflag=1;
     $registered_time=date('Y-m-d h:i:s');
     $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
     $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, delete_flag, registered_time) values('".$_SESSION['familyname']."', '".$_SESSION['lastname']."', '".$_SESSION['kana_family']."', '".$_SESSION['kana_name']."', '".$_SESSION['mail']."', '$passhash', '".$_SESSION['gender']."', '".$_SESSION['postalcode']."', '".$_SESSION['pre']."', '".$_SESSION['shikutyouson']."', '".$_SESSION['banchi']."', '$authority', '$deleteflag', '$registered_time');");
