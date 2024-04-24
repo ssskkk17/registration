@@ -1,5 +1,4 @@
 <?php
-require("./dbconnect.php");
 $error=[];
 session_start();
 if($_POST['familyname']=='') {

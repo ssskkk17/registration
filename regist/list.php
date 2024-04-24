@@ -24,6 +24,9 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                 list-style-type: none;
                 padding-left: 20px;  
             }
+            h2 {
+                padding-left: 70px;
+            }
             table {
                 width: 90%;
                 margin: auto;
@@ -54,6 +57,8 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
         
         <main>
             <h2>アカウント一覧</h2>
+            <br>
+            <br>
             <table border="1"cellspacing="0">
                 <tr>
                     <th>ID</th>
@@ -77,7 +82,7 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                     echo "<td align='right'>"; echo $row['family_name_kana']; echo "</td>";
                     echo "<td align='right'>"; echo $row['last_name_kana']; echo "</td>";
                     echo "<td>"; echo $row['mail']; echo "</td>";
-                    echo "<td align='center'>"; echo $row['gender']; echo "</td>";
+                    echo "<td align='center'>"; if($row['gender']=="0") {echo "男";} else {echo "女";} echo "</td>";
                     echo "<td align='center'>"; if($row['authority']=="0") {echo "一般";} else {echo "管理者";} echo "</td>";
                     echo "<td align='center'>"; if($row['delete_flag']=="0") {echo "有効";} else {echo "無効";} echo "</td>";
                     echo "<td align='center'>"; 
@@ -86,16 +91,16 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                     echo "<td align='center'>"; echo $row['update_time']; echo "</td>";
                     echo "<td align='center'>";
                     echo '<form method="post"action="delete.php">';
-                    echo '<input type="submit"value="更新">';
+                    echo '<input type="submit"value="削除">';
                     echo "</form>";
                     echo "</td>";
                     echo "<td align='center'>";
                     echo '<form method="post"action="update.php">';
-                    echo '<input type="submit"value="削除">';
+                    echo '<input type="submit"value="更新">';
                     echo "</form>";
                     echo "</td>";
                     echo "</tr>\n";
-                    }
+                }
                 ?>
             </table>
         </main>

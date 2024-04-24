@@ -8,10 +8,20 @@ if(empty($error)) {
     } else {
         $authority=0;
     }
-    $deleteflag=1;
+    if($_SESSION['gender']=="男") {
+        $gender=0;
+    } else {
+        $gender=1;
+    }
+    $deleteflag=0;
     $registered_time=date('Y-m-d h:i:s');
-    $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
-    $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, delete_flag, registered_time) values('".$_SESSION['familyname']."', '".$_SESSION['lastname']."', '".$_SESSION['kana_family']."', '".$_SESSION['kana_name']."', '".$_SESSION['mail']."', '$passhash', '".$_SESSION['gender']."', '".$_SESSION['postalcode']."', '".$_SESSION['pre']."', '".$_SESSION['shikutyouson']."', '".$_SESSION['banchi']."', '$authority', '$deleteflag', '$registered_time');");
+    try {
+        $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
+        $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, delete_flag, registered_time) values('".$_SESSION['familyname']."', '".$_SESSION['lastname']."', '".$_SESSION['kana_family']."', '".$_SESSION['kana_name']."', '".$_SESSION['mail']."', '$passhash', '$gender', '".$_SESSION['postalcode']."', '".$_SESSION['pre']."', '".$_SESSION['shikutyouson']."', '".$_SESSION['banchi']."', '$authority', '$deleteflag', '$registered_time');");
+    } catch(PDOException) {
+        header('Location:error.html');
+        exit();
+    };
 }
 ?>
 
@@ -20,11 +30,16 @@ if(empty($error)) {
     <head>
         <title>アカウント登録完了画面</title>
         <style>
-        h1 {
-            color: red;
-            font-size: 100px;
-            text-align: center;
-            }</style>
+            h1 {
+                color: red;
+                font-size: 100px;
+                text-align: center;
+            }
+            .error {
+                color: red;
+            }
+            
+        </style>
     </head>
     <body>
         <header>
