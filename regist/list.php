@@ -73,39 +73,38 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                     <th>更新日時</th>
                     <th colspan="2">操作</th>
                 </tr>
-                <?php
-                echo "<tr>\n";
-                foreach($stmt as $row) {
-                    echo "<td align='right'>"; echo $row['id']; echo "</td>";
-                    echo "<td align='right'>"; echo $row['family_name']; echo "</td>";
-                    echo "<td align='right'>"; echo $row['last_name']; echo "</td>";
-                    echo "<td align='right'>"; echo $row['family_name_kana']; echo "</td>";
-                    echo "<td align='right'>"; echo $row['last_name_kana']; echo "</td>";
-                    echo "<td>"; echo $row['mail']; echo "</td>";
-                    echo "<td align='center'>"; if($row['gender']=="0") {echo "男";} else {echo "女";} echo "</td>";
-                    echo "<td align='center'>"; if($row['authority']=="0") {echo "一般";} else {echo "管理者";} echo "</td>";
-                    echo "<td align='center'>"; if($row['delete_flag']=="0") {echo "有効";} else {echo "無効";} echo "</td>";
-                    echo "<td align='center'>"; 
-                    $ts=strtotime($row['registered_time']);
-                    echo date('Y/m/d', $ts);echo "</td>";
-                    echo "<td align='center'>"; echo $row['update_time']; echo "</td>";
-                    echo "<td align='center'>";
-                    echo '<form method="post"action="delete.php">';
-                    echo '<input type="submit"value="削除">';
-                    echo "</form>";
-                    echo "</td>";
-                    echo "<td align='center'>";
-                    echo '<form method="post"action="update.php">';
-                    echo '<input type="submit"value="更新">';
-                    echo "</form>";
-                    echo "</td>";
-                    echo "</tr>\n";
-                }
-                ?>
+                <tr>
+                    <?php
+                    foreach($stmt as $row) {?>
+                    <td align='right'><?php echo $row['id']?></td>
+                    <td align='right'><?php echo $row['family_name']?></td>
+                    <td align='right'><?php echo $row['last_name']?></td>
+                    <td align='right'><?php echo $row['family_name_kana']?></td>
+                    <td align='right'><?php echo $row['last_name_kana']?></td>
+                    <td><?php echo $row['mail']?></td>
+                    <td align='center'><?php if($row['gender']=="0") {echo "男";} else {echo "女";}?></td>
+                    <td align='center'><?php if($row['authority']=="0") {echo "一般";} else {echo "管理者";}?></td>
+                    <td align='center'><?php if($row['delete_flag']=="0") {echo "有効";} else {echo "無効";}?></td>
+                    <td align='center'>
+                        <?php $ts=strtotime($row['registered_time']);
+                        echo date('Y/m/d', $ts);?>
+                    </td>
+                    <td align='center'><?php echo $row['update_time'];?></td>
+                    <td align='center'>
+                        <a href="delete.php?id=<?php echo $row['id']?>">
+                            <input type="submit"value="削除">
+                        </a>
+                    </td>
+                    <td align='center'>
+                        <form method="post"action="update.php">
+                            <input type="submit"value="更新">
+                        </form>
+                    </td>
+                </tr>
+                <?php }; ?>
             </table>
         </main>
         <br>
-        
         <footer>
         </footer>
     </body>

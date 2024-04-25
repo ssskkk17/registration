@@ -1,8 +1,10 @@
+<?php
+$id=$_GET['id'];
+?>
 <?php 
 mb_internal_encoding("utf-8");
 $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root", "");
-$stmt=$pdo->query("select * from regist_user order by id desc");
-$count=0;
+$stmt=$pdo->query("select * from regist_user where id=$id");
 ?>
 
 <!DOCTYPE html>
@@ -44,6 +46,9 @@ $count=0;
                 width: 100%;
                 bottom: 0px;
             }
+            .send {
+                text-align: center;
+            }
         </style>
     </head>
     
@@ -64,8 +69,7 @@ $count=0;
             <br>
             <form method="post"action="delete_confirm.php">
                 <?php 
-                while($row=$stmt->fetch()) {
-                    if($count++==0) {;?>
+                while($row=$stmt->fetch()) {?>
                 <div>
                     <label>名前（姓）　　</label>
                     <?php echo htmlspecialchars($row['family_name']); ?>
@@ -114,11 +118,9 @@ $count=0;
                 </div>
                 <div>
                     <label>アカウント権限    </label>
-                    <?php echo $row['authority'];
-                    ?>
+                    <?php echo $row['authority'];?>
                 </div>
-                <?php }
-                };?>
+                <?php };?>
                 <br>
                 <div class="send">
                     <input type="submit"class="button"name="confirm"value="確認する">
