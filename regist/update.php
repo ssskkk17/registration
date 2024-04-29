@@ -1,57 +1,11 @@
-<?php 
+<?php
 session_start();
 $_SESSION['id']=$_GET['id'];
 $id=$_SESSION['id'];
-?>
-<?php
-mb_internal_encoding("utf-8");
-$pdo=new PDO("mysql:dbname=regist;host=localhost;", "root","");
-$stmt=$pdo->query("select * from regist_user where id=$id");
-?>
-<?php
-$error=[];
-$_POST['family_name']='';
-$_POST['last_name']='';
-$_POST['kana_family']='';
-$_POST['kana_name']='';
-$_POST['mail']='';
-$_POST['password']='';
-$_POST['postalcode']='';
-$_POST['shikutyouson']='';
-$_POST['banchi']='';
-$_POST['pre']='';
-
-if($_SERVER['REQUEST_METHOD']=='POST') {
-    if($_POST['family_name']=='') {
-        $error['familyname']='blank';
-    }
-    if($_POST['last_name']=='') {
-        $error['lastname']='blank';
-    }
-    if($_POST['kana_family']=='') {
-        $error['kana_family']='blank';
-    }
-    if($_POST['kana_name']=='') {
-        $error['kana_name']='blank';
-    }
-    if($_POST['mail']=='') {
-        $error['mail']='blank';
-    }
-    if($_POST['password']=='') {
-        $error['password']='blank';
-    }
-    if($_POST['postalcode']=='') {
-        $error['postalcode']='blank';
-    }
-    if($_POST['pre']=='') {
-        $error['pre']='blank';
-    }
-    if($_POST['shikutyouson']=='') {
-        $error['shikutyouson']='blank';
-    }
-    if($_POST['banchi']=='') {
-        $error['banchi']='blank';
-    }
+if($_SERVER['REQUEST_METHOD']==='GET') {
+    mb_internal_encoding("utf8");
+    $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root","");
+    $stmt=$pdo->query("select * from regist_user where id=$id");
 }
 ?>
 
@@ -121,27 +75,27 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
         <main>
             <div class="main_container">
             <h2>アカウント登録画面</h2>
+                <?php
+                    while($row=$stmt->fetch()){;?>
             <form method="post"action="update_confirm.php">
-                <?php while($row=$stmt->fetch()) {;?>
-                <?php $_SESSION['familyname']=$row['family_name'];?>
                 <div>
                     <label>名前（姓）　　</label>
-                    <input type="text"class="text"size="20"name="familyname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php echo $row['family_name'];?>">
-                    <?php if(empty($error['familyname']) && empty($_SESSION['familyname'])): ?>
+                    <input type="text"class="text"size="20"name="familyname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php if(!empty($_SESSION['familyname'])) {echo $_SESSION['familyname'];} else {echo $row['family_name'];}?>">
+                    <?php if(!empty($error['familyname']) && empty($_SESSION['familyname'])): ?>
                     <div class="error"><?php echo "*名前（姓）を入力してください*"; ?></div>
                     <?php endif; ?>
                 </div>
                 <div>
                     <label>名前（名）　　</label>
-                    <input type="text"class="text"size="20"name="lastname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php echo $row['last_name'];?>">
-                    <?php if(empty($error['lastname']) && empty($_SESSION['lastname'])): ?>
+                    <input type="text"class="text"size="20"name="lastname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php if(!empty($_SESSION['lastname'])) {echo $_SESSION['lastname'];} else{echo $row['last_name'];}?>">
+                    <?php if(!empty($error['lastname']) && empty($_SESSION['lastname'])): ?>
                     <div class="error"><?php echo "*名前（名）を入力してください*"; ?></div>
                     <?php endif; ?>
                 </div>
                 <div>
                     <label>カナ（姓）　　</label>
-                    <input type="text"class="text"size="20"name="kana_family"maxlength="10"pattern="^[ァ-ンヴー]+$"value="<?php echo $row['family_name_kana'];?>">
-                    <?php if(empty($error['kana_family']) && empty($_SESSION['kana_family'])): ?>
+                    <input type="text"class="text"size="20"name="kana_family"maxlength="10"pattern="^[ァ-ンヴー]+$"value="<?php if(!empty($_SESSION['kana_family'])) {echo $_SESSION['kana_family'];} else{echo $row['family_name_kana'];}?>">
+                    <?php if(!empty($error['kana_family']) && empty($_SESSION['kana_family'])): ?>
                     <div class="error"><?php echo "*カナ（姓）を入力してください*"; ?></div>
                     <?php endif; ?>
                 </div>
@@ -229,7 +183,7 @@ if($_SERVER['REQUEST_METHOD']=='POST') {
                         <option value="鹿児島県"<?php if($row['prefecture']=="鹿児島") { echo "selected";}?>>鹿児島県</option>
                         <option value="沖縄県"<?php if($row['prefecture']=="沖縄県") { echo "selected";}?>>沖縄県</option>
                     </select>
-                        <?php if(empty($error['pre']) && empty($_SESSION['pre'])): ?>
+                        <?php if(!empty($error['pre']) && empty($_SESSION['pre'])): ?>
                         <div class="error"><?php echo "*都道府県を選択してください*"; ?></div>
                         <?php endif; ?>
                 </div>

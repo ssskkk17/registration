@@ -1,16 +1,16 @@
 <?php
 $error=[];
 session_start();
-if($_POST['family_name']=='') {
+if($_POST['familyname']=='') {
     $error['familyname']='blank';
 } else {
-    $_SESSION['familyname']=$_POST['family_name'];
+    $_SESSION['familyname']=$_POST['familyname'];
 }
 
 if($_POST['lastname']=='') {
     $error['lastname']='blank';
 } else {
-    $_SESSION['lastname']=$row['last_name'];
+    $_SESSION['lastname']=$_POST['lastname'];
 }
 
 if($_POST['kana_family']=='') {
@@ -72,7 +72,6 @@ if($_POST['authority']=="一般") {
 if($_POST['authority']=="管理者") {
     $_SESSION['authority']=$_POST['authority'];
 }
-
 if(!empty($error)) {
     header('Location:update.php');
     exit();
@@ -214,8 +213,9 @@ if(!empty($error)) {
                 </div>
             </form>
             <div class="back">
-                <a href="update.php?id=<?php echo $_SESSION['id']?>">
-                    <input type="submit"value="前に戻る"></a>
+                <form method='post'action="update.php">
+                    <input type="submit"value="前に戻る">
+                </form>
             </div>
         </main>
         <footer>
