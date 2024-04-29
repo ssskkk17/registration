@@ -96,9 +96,9 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                         </a>
                     </td>
                     <td align='center'>
-                        <form method="post"action="update.php">
+                        <a href="update.php?id=<?php echo $row['id']?>">
                             <input type="submit"value="更新">
-                        </form>
+                        </a>
                     </td>
                 </tr>
                 <?php }; ?>

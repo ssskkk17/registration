@@ -1,11 +1,20 @@
-<?php 
+<?php
 session_start();
+mb_internal_encoding("utf8");
+$id=$_SESSION['id'];
+try {
+    $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root", "");
+    $pdo->exec("update regist_user set delete_flag='1' where id=$id");
+} catch(PDOException) {
+    header('Location:error.html');
+    exit();
+};
 ?>
 <!DOCTYPE html>
 <html lang="ja">
     <head>
         <meta charset="utf-8">
-        <title>アカウント削除確認画面</title>
+        <title>アカウント削除完了画面</title>
         <style>
             header {
                 background-color: black;
@@ -19,21 +28,13 @@ session_start();
                 font-size: 20px;
                 line-height: 50px;
                 list-style-type: none;
-                padding-left: 20px;  
+                padding-left: 20px; 
             }
             p {
                 color: red;
-                font-size: 70px;
+                font-size: 80px;
                 text-align: center;
                 padding-top: 100px;
-            }
-            .delete {
-                float: left;
-                padding-left: 600px;
-            }
-            .back {
-                float: right;
-                padding-right: 700px;
             }
             footer {
                 background-color: black;
@@ -44,6 +45,7 @@ session_start();
             }
         </style>
     </head>
+    
     <body>
         <header>
             <ul>
@@ -56,15 +58,15 @@ session_start();
             </ul>
         </header>
         <main>
-            <h1>アカウント削除確認画面</h1>
-            <p>本当に削除してよろしいですか？</p>
-            <br>
-            <br>
-            <form method="post"class="delete"action="delete_complete.php">
-                <input type="submit"value="削除する"></form>
-            <a href="delete.php?id=<?php echo $_SESSION['id']?>">
-               <input type="submit"value="前に戻る"></a>
+            <h1>アカウント削除完了画面</h1>
+            <p>削除が完了しました。</p>
+            <form method="post"action="index.html">
+                <input type="submit"class="back"value="TOPへ戻る">
+            </form>
         </main>
         <footer></footer>
     </body>
 </html>
+<?php 
+session_destroy();
+?>

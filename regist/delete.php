@@ -1,5 +1,7 @@
 <?php
-$id=$_GET['id'];
+session_start();
+$_SESSION['id']=$_GET['id'];
+$id=$_SESSION['id'];
 ?>
 <?php 
 mb_internal_encoding("utf-8");
@@ -72,53 +74,74 @@ $stmt=$pdo->query("select * from regist_user where id=$id");
                 while($row=$stmt->fetch()) {?>
                 <div>
                     <label>名前（姓）　　</label>
-                    <?php echo htmlspecialchars($row['family_name']); ?>
+                    <?php
+                    $_SESSION['family_name']=$row['family_name'];
+                    echo $_SESSION['family_name']; ?>
                 </div>
                 <div>
                     <label>名前（名）　　</label>
-                    <?php echo htmlspecialchars($row['last_name']); ?>
+                    <?php $_SESSION['last_name']=$row['last_name'];
+                    echo $_SESSION['last_name']; ?>
                 </div>
                 <div>
                     <label>カナ（姓）　　</label>
-                    <?php echo htmlspecialchars($row['family_name_kana']); ?>
+                    <?php $_SESSION['family_name_kana']=$row['family_name_kana'];
+                    echo $_SESSION['family_name_kana']; ?>
                 </div>
                 <div>
                     <label>カナ（名）　　</label>
-                    <?php echo htmlspecialchars($row['last_name_kana']); ?>
+                    <?php $_SESSION['last_name_kana']=$row['last_name_kana'];
+                    echo $_SESSION['last_name_kana']; ?>
                 </div>
                 <div>
                     <label>メールアドレス　　</label>
-                    <?php echo htmlspecialchars($row['mail']); ?>        
+                    <?php $_SESSION['mail']=$row['mail'];
+                    echo $_SESSION['mail']; ?>        
                 </div>
                 <div>
                     <label>パスワード　　</label>
-                    <?php $pass=$row['password'];
-                    echo str_repeat('●', strlen($pass)), PHP_EOL;
+                    <?php $_SESSION['password']=$row['password'];
+                    echo str_repeat('●', strlen($_SESSION['password'])), PHP_EOL;
                     ?>
                 </div>
                 <div>
                     <label>性別　　</label>
-                    <?php echo htmlspecialchars($row['gender']); ?>
+                    <?php $_SESSION['gender']=$row['gender'];
+                     if($_SESSION['gender']=="0") {
+                         echo "男";
+                     } else {
+                         echo "女";
+                     }
+                    ;?>
                 </div>
                 <div>
                     <label>郵便番号　　</label>
-                    <?php echo htmlspecialchars($row['postal_code']); ?>
+                    <?php $_SESSION['postal_code']=$row['postal_code'];
+                    echo $_SESSION['postal_code']; ?>
                 </div>
                 <div>
                     <label>住所（都道府県）　　</label>
-                    <?php echo htmlspecialchars($row['prefecture']); ?>
+                    <?php $_SESSION['prefecture']=$row['prefecture'];
+                    echo $_SESSION['prefecture']; ?>
                 </div>
                 <div>
                     <label>住所（市区町村）　　</label>
-                    <?php echo htmlspecialchars($row['address_1']); ?>
+                    <?php $_SESSION['address_1']=$row['address_1'];
+                    echo $_SESSION['address_1']; ?>
                 </div>
                 <div>
                     <label>住所（番地）　　</label>
-                    <?php echo htmlspecialchars($row['address_2']); ?>
+                    <?php $_SESSION['address_2']=$row['address_2'];
+                    echo $_SESSION['address_2']; ?>
                 </div>
                 <div>
                     <label>アカウント権限    </label>
-                    <?php echo $row['authority'];?>
+                    <?php $_SESSION['authority']=$row['authority'];
+                    if($_SESSION['authority']=="0") {
+                        echo "一般";
+                    } else {
+                        echo "管理者";
+                    };?>
                 </div>
                 <?php };?>
                 <br>
