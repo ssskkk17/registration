@@ -27,7 +27,7 @@ date_default_timezone_set('Asia/Tokyo');
 $update_time=date('Y-m-d h:i:s');
 try {
     $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root", "");
-    $pdo->exec("update regist_user set family_name='$familyname', last_name='$lastname', family_name_kana='$kana_family', last_name_kana='$kana_name', mail='$mail, password='$passhash', gender='$gender', postal_code='$postalcode', prefecture='$pre', address_1='$address_1', address_2='$address_2', authority='$authority', delete_flag='$delete_flag', update_time='$update_time' where id=$id");
+    $pdo->exec("update regist_user set family_name='$familyname', last_name='$lastname', family_name_kana='$kana_family', last_name_kana='$kana_name', mail='$mail', password='$passhash', gender='$gender', postal_code='$postalcode', prefecture='$pre', address_1='$address_1', address_2='$address_2', authority='$authority', delete_flag='$delete_flag', update_time='$update_time' where id=$id");
 } catch(PDOException) {
     header('Location:error.html');
     exit();

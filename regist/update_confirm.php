@@ -60,10 +60,10 @@ if($_POST['banchi']=='') {
 } else {
     $_SESSION['banchi']=$_POST['banchi'];
 }
-
-if($_POST['gender']=="女") {
+if($_POST['gender']=="男") {
     $_SESSION['gender']=$_POST['gender'];
-} else {
+}
+if($_POST['gender']=="女") {
     $_SESSION['gender']=$_POST['gender'];
 }
 if($_POST['authority']=="一般") {
@@ -73,7 +73,7 @@ if($_POST['authority']=="管理者") {
     $_SESSION['authority']=$_POST['authority'];
 }
 if(!empty($error)) {
-    header('Location:update.php');
+    header("Location:update.php?id=<?php echo $_SESSION['id']?>");
     exit();
 }
 ?>
@@ -109,26 +109,6 @@ if(!empty($error)) {
             display: inline-block;
             width: 150px;
             vertical-align: top;
-        }
-        form .send {
-            float: right;
-        }
-        .back {
-            float: right;
-        }
-        .send .button {
-            font-size: 20px;
-            height: 30px;
-            width: 150px;
-            border-style: solid;
-            margin-right: 100px;
-        }
-        .back .button {
-            font-size: 20px;
-            height: 30px;
-            width: 150px;
-            border-style: solid;
-            margin-left: 250px;
         }
         footer {
             clear: both;
@@ -213,9 +193,9 @@ if(!empty($error)) {
                 </div>
             </form>
             <div class="back">
-                <form method='post'action="update.php">
+                <a href="update.php?id=<?php echo $_SESSION['id']?>">
                     <input type="submit"value="前に戻る">
-                </form>
+                </a>
             </div>
         </main>
         <footer>

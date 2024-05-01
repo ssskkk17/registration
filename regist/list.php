@@ -89,7 +89,11 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                         <?php $ts=strtotime($row['registered_time']);
                         echo date('Y/m/d', $ts);?>
                     </td>
-                    <td align='center'><?php echo $row['update_time'];?></td>
+                    <td align='center'>
+                        <?php if(!empty($row['update_time'])) {
+                            $ts_2=strtotime($row['update_time']);
+                            echo date('Y/m/d', $ts_2);}?>
+                    </td>
                     <td align='center'>
                         <a href="delete.php?id=<?php echo $row['id']?>">
                             <input type="submit"value="削除">
