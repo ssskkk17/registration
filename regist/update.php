@@ -1,5 +1,14 @@
 <?php
 session_start();
+$error=[];
+if(!empty($_GET['id'])) {
+    $_SESSION['id']=$_GET['id'];
+}
+$_POST['familyname']='';
+if($_POST['familyname']=='') {
+    $error['familyname']='blank';
+    }
+echo $_SESSION['id'];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -68,7 +77,6 @@ session_start();
             <div class="main_container">
             <h2>アカウント登録画面</h2>
                 <?php 
-                $_SESSION['id']=$_GET['id'];
                 $id=$_SESSION['id'];
                 mb_internal_encoding("utf8");
                 $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root","");
@@ -77,8 +85,8 @@ session_start();
             <form method="post"action="update_confirm.php">
                 <div>
                     <label>名前（姓）　　</label>
-                    <input type="text"class="text"size="20"name="familyname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php if(!empty($_SESSION['familyname'])) {echo $_SESSION['familyname'];} else {echo $row['family_name'];}?>">
-                    <?php if(!empty($error['familyname']) && empty($_SESSION['familyname'])): ?>
+                    <input type="text"class="text"size="20"name="familyname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php if(!empty($_SESSION['familyname'])){echo $_SESSION['familyname'];} else {echo $row['family_name'];}?>">
+                    <?php if(empty($error['familyname'])): ?>
                     <div class="error"><?php echo "*名前（姓）を入力してください*"; ?></div>
                     <?php endif; ?>
                 </div>
@@ -119,8 +127,8 @@ session_start();
                 </div>
                 <div>
                     <label>性別    </label>
-                    <input type="radio"name="gender"value="男"<?php if($row['gender']=="0"){echo "checked";}?>>男
-                    <input type="radio"name="gender"value="女"<?php if($row['gender']=="1"){echo "checked";}?>>女
+                    <input type="radio"name="gender"value="男"<?php if($_SESSION['gender']=="男"){echo "checked";} elseif( $row['gender']=="0"){echo "checked";}?>>男
+                    <input type="radio"name="gender"value="女"<?php if($_SESSION['gender']=="女"){echo "checked";} elseif($row['gender']=="1"){echo "checked";}?>>女
                 </div>
                 <div>
                     <label>郵便番号　　</label>
@@ -207,7 +215,8 @@ session_start();
                 </div>
                 <br>
                 <input type="submit"class="button"name="confirm"value="確認する">
-                <?php };?>
+                <?php 
+                };?>
             </form>
             </div>
         </main>

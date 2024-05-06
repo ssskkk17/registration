@@ -1,6 +1,7 @@
 <?php
 $error=[];
 session_start();
+echo $_SESSION['id'];
 if($_POST['familyname']=='') {
     $error['familyname']='blank';
 } else {
@@ -73,7 +74,7 @@ if($_POST['authority']=="管理者") {
     $_SESSION['authority']=$_POST['authority'];
 }
 if(!empty($error)) {
-    header("Location:update.php?id=<?php echo $_SESSION['id']?>");
+    header("Location:update.php");
     exit();
 }
 ?>

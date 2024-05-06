@@ -38,7 +38,13 @@ try {
     <head>
         <meta charset="utf-8">
         <title>アカウント更新完了画面</title>
-        <style></style>
+        <style>
+            p {
+                text-align: center;
+                color: red;
+                font-size: 50px;
+            }
+        </style>
     </head>
     <body>
         <header></header>
