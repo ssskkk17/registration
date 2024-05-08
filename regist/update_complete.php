@@ -2,22 +2,22 @@
 session_start();
 $id=$_SESSION['id'];
 mb_internal_encoding("utf8");
-$familyname=$_SESSION['familyname'];
-$lastname=$_SESSION['lastname'];
-$kana_family=$_SESSION['kana_family'];
-$kana_name=$_SESSION['kana_name'];
-$mail=$_SESSION['mail'];
-$passhash=password_hash($_SESSION['password'], PASSWORD_DEFAULT);
-if($_SESSION['gender']=="男") {
+$familyname=$_POST['familyname'];
+$lastname=$_POST['lastname'];
+$kana_family=$_POST['kana_family'];
+$kana_name=$_POST['kana_name'];
+$mail=$_POST['mail'];
+$passhash=password_hash($_POST['password'], PASSWORD_DEFAULT);
+if($_POST['gender']=="男") {
     $gender=0;
 } else {
     $gender=1;
 }
-$postalcode=$_SESSION['postalcode'];
-$pre=$_SESSION['pre'];
-$address_1=$_SESSION['shikutyouson'];
-$address_2=$_SESSION['banchi'];
-if($_SESSION['authority']=="一般") {
+$postalcode=$_POST['postalcode'];
+$pre=$_POST['pre'];
+$address_1=$_POST['shikutyouson'];
+$address_2=$_POST['banchi'];
+if($_POST['authority']=="一般") {
     $authority=0;
 } else {
     $authority=1;

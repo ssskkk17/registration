@@ -2,78 +2,40 @@
 $error=[];
 session_start();
 echo $_SESSION['id'];
-if($_POST['familyname']=='') {
-    $error['familyname']='blank';
-} else {
-    $_SESSION['familyname']=$_POST['familyname'];
-}
 
-if($_POST['lastname']=='') {
-    $error['lastname']='blank';
-} else {
-    $_SESSION['lastname']=$_POST['lastname'];
+if($_POST['familyname']=="") {
+    header("Location:update.php");
+    exit();
 }
-
-if($_POST['kana_family']=='') {
-    $error['kana_family']='blank';
-} else {
-    $_SESSION['kana_family']=$_POST['kana_family'];
+if($_POST['lastname']=="") {
+    header("Location:update.php");
+    exit();
 }
-
-if($_POST['kana_name']=='') {
-    $error['kana_name']='blank';
-} else {
-    $_SESSION['kana_name']=$_POST['kana_name'];
+if($_POST['kana_family']=="") {
+    header("Location:update.php");
+    exit();
 }
-
-if($_POST['mail']=='') {
-    $error['mail']='blank';
-} else {
-    $_SESSION['mail']=$_POST['mail'];
+if($_POST['kana_name']=="") {
+    header("Location:update.php");
+    exit();
 }
-
-if($_POST['password']=='') {
-    $error['password']='blank';
-} else {
-    $_SESSION['password']=$_POST['password'];
+if($_POST['mail']=="") {
+    header("Location:update.php");
+    exit();
 }
-
-if($_POST['postalcode']=='') {
-    $error['postalcode']='blank';
-} else {
-    $_SESSION['postalcode']=$_POST['postalcode'];
+if($_POST['postalcode']=="") {
+    header("Location:update.php");
+    exit();
 }
-
-if($_POST['pre']=='') {
-    $error['pre']="blank";
-} else {
-    $_SESSION['pre']=$_POST['pre'];
+if($_POST['shikutyouson']=="") {
+    header("Location:update.php");
+    exit();
 }
-
-if($_POST['shikutyouson']=='') {
-    $error['shikutyouson']='blank';
-} else {
-    $_SESSION['shikutyouson']=$_POST['shikutyouson'];
+if($_POST['banchi']=="") {
+    header("Location:update.php");
+    exit();
 }
-
-if($_POST['banchi']=='') {
-    $error['banchi']='blank';
-} else {
-    $_SESSION['banchi']=$_POST['banchi'];
-}
-if($_POST['gender']=="男") {
-    $_SESSION['gender']=$_POST['gender'];
-}
-if($_POST['gender']=="女") {
-    $_SESSION['gender']=$_POST['gender'];
-}
-if($_POST['authority']=="一般") {
-    $_SESSION['authority']=$_POST['authority'];
-}
-if($_POST['authority']=="管理者") {
-    $_SESSION['authority']=$_POST['authority'];
-}
-if(!empty($error)) {
+if($_POST['authority']=="") {
     header("Location:update.php");
     exit();
 }
@@ -192,11 +154,33 @@ if(!empty($error)) {
                 <div class="send">
                     <input type="submit"name="send"value="更新する">
                 </div>
+                <input type="hidden"value="<?php echo $_POST['familyname'];?>" name="familyname">
+                <input type="hidden"value="<?php echo $_POST['lastname'];?>" name="lastname">
+                <input type="hidden"value="<?php echo $_POST['kana_family'];?>" name="kana_family">
+                <input type="hidden"value="<?php echo $_POST['kana_name'];?>" name="kana_name">
+                <input type="hidden"value="<?php echo $_POST['mail'];?>" name="mail">
+                <input type="hidden"value="<?php echo $_POST['password'];?>" name="password">
+                <input type="hidden"value="<?php echo $_POST['gender'];?>" name="gender">
+                <input type="hidden"value="<?php echo $_POST['postalcode'];?>" name="postalcode">
+                <input type="hidden"value="<?php echo $_POST['shikutyouson'];?>" name="shikutyouson">
+                <input type="hidden"value="<?php echo $_POST['banchi'];?>" name="banchi">
+                <input type="hidden"value="<?php echo $_POST['authority'];?>" name="authority">
             </form>
             <div class="back">
-                <a href="update.php?id=<?php echo $_SESSION['id']?>">
+                <form method="post"action="update.php">
                     <input type="submit"value="前に戻る">
-                </a>
+                    <input type="hidden"value="<?php echo $_POST['familyname'];?>" name="familyname">
+                    <input type="hidden"value="<?php echo $_POST['lastname'];?>" name="lastname">
+                    <input type="hidden"value="<?php echo $_POST['kana_family'];?>" name="kana_family">
+                    <input type="hidden"value="<?php echo $_POST['kana_name'];?>" name="kana_name">
+                    <input type="hidden"value="<?php echo $_POST['mail'];?>" name="mail">
+                    <input type="hidden"value="<?php echo $_POST['password'];?>" name="password">
+                    <input type="hidden"value="<?php echo $_POST['gender'];?>" name="gender">
+                    <input type="hidden"value="<?php echo $_POST['postalcode'];?>" name="postalcode">
+                    <input type="hidden"value="<?php echo $_POST['shikutyouson'];?>" name="shikutyouson">
+                    <input type="hidden"value="<?php echo $_POST['banchi'];?>" name="banchi">
+                    <input type="hidden"value="<?php echo $_POST['authority'];?>" name="authority">
+                </form>
             </div>
         </main>
         <footer>

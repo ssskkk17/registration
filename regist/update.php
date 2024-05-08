@@ -4,11 +4,6 @@ $error=[];
 if(!empty($_GET['id'])) {
     $_SESSION['id']=$_GET['id'];
 }
-$_POST['familyname']='';
-if($_POST['familyname']=='') {
-    $error['familyname']='blank';
-    }
-echo $_SESSION['id'];
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -85,54 +80,54 @@ echo $_SESSION['id'];
             <form method="post"action="update_confirm.php">
                 <div>
                     <label>名前（姓）　　</label>
-                    <input type="text"class="text"size="20"name="familyname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php if(!empty($_SESSION['familyname'])){echo $_SESSION['familyname'];} else {echo $row['family_name'];}?>">
-                    <?php if(empty($error['familyname'])): ?>
+                    <input type="text"class="text"size="20"name="familyname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php if(!empty($_POST['familyname'])){echo $_POST['familyname'];} else {echo $row['family_name'];}?>">
+                    <?php if(!empty($_POST['familyname']) && $_POST['familyname']==""): ?>
                     <div class="error"><?php echo "*名前（姓）を入力してください*"; ?></div>
                     <?php endif; ?>
                 </div>
                 <div>
                     <label>名前（名）　　</label>
-                    <input type="text"class="text"size="20"name="lastname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php if(!empty($_SESSION['lastname'])) {echo $_SESSION['lastname'];} else{echo $row['last_name'];}?>">
-                    <?php if(!empty($error['lastname']) && empty($_SESSION['lastname'])): ?>
+                    <input type="text"class="text"size="20"name="lastname"maxlength="10"pattern="[\u4E00-\u9FFF\u3040-\u309Fー]*"value="<?php if(!empty($_POST['lastname'])){echo $_POST['lastname'];} else {echo $row['last_name'];}?>">
+                    <?php if(!empty($_POST['lastname']) && $_POST['lastname']==""): ?>
                     <div class="error"><?php echo "*名前（名）を入力してください*"; ?></div>
                     <?php endif; ?>
                 </div>
                 <div>
                     <label>カナ（姓）　　</label>
-                    <input type="text"class="text"size="20"name="kana_family"maxlength="10"pattern="^[ァ-ンヴー]+$"value="<?php if(!empty($_SESSION['kana_family'])) {echo $_SESSION['kana_family'];} else{echo $row['family_name_kana'];}?>">
-                    <?php if(!empty($error['kana_family']) && empty($_SESSION['kana_family'])): ?>
+                    <input type="text"class="text"size="20"name="kana_family"maxlength="10"pattern="^[ァ-ンヴー]+$"value="<?php if(!empty($_POST['kana_family'])){echo $_POST['kana_family'];} else {echo $row['family_name_kana'];}?>">
+                    <?php if(!empty($_POST['kana_family']) && $_POST['kana_family']==""): ?>
                     <div class="error"><?php echo "*カナ（姓）を入力してください*"; ?></div>
                     <?php endif; ?>
                 </div>
                 <div>
                     <label>カナ（名）　　</label>
-                    <input type="text"class="text"size="20"name="kana_name"maxlength="10"pattern="^[ァ-ンヴー]+$"value="<?php if(!empty($_SESSION['kana_name'])) {echo $_SESSION['kana_name'];} else {echo $row['last_name_kana'];}?>">
-                    <?php if(!empty($error['kana_name']) && empty($_SESSION['kana_name'])): ?>
+                    <input type="text"class="text"size="20"name="kana_name"maxlength="10"pattern="^[ァ-ンヴー]+$"value="<?php if(!empty($_POST['kana_name'])){echo $_POST['kana_name'];} else {echo $row['last_name_kana'];}?>">
+                    <?php if(!empty($_POST['kana_name']) && $_POST['kana_name']==""): ?>
                     <div class="error"><?php echo "*カナ（名）を入力してください*"; ?></div>
                     <?php endif; ?>
                 </div>
                 <div>
                     <label>メールアドレス　　</label>
-                    <input type="email"class="text"size="20"name="mail"maxlength="100"pattern="^[-@a-zA-Z0-9]+$"value="<?php if(!empty($_SESSION['mail'])) {echo $_SESSION['mail'];} else {echo $row['mail'];}?>">
+                    <input type="email"class="text"size="20"name="mail"maxlength="100"pattern="^[-@a-zA-Z0-9]+$"value="<?php echo $row['mail'];?>">
                     <?php if(!empty($error['mail']) && empty($_SESSION['mail'])): ?>
                     <div class="error"><?php echo "*メールアドレスを入力してください*"; ?></div>
                     <?php endif; ?>
                 </div>
                 <div>
                     <label>パスワード　　</label>
-                    <input type="password"name="password"maxlength="10"pattern="^[a-zA-Z0-9]+$"value="<?php if(!empty($_SESSION['password'])){echo $_SESSION['password'];}?>">
+                    <input type="password"name="password"maxlength="10"pattern="^[a-zA-Z0-9]+$"value="<?php if(!empty($_POST['password'])){echo $_POST['password'];}?>">
                     <?php if(!empty($error['password']) && empty($_SESSION['password'])): ?>
                     <div class="error"><?php echo "*パスワードを入力してください*"; ?></div>
                     <?php endif; ?>
                 </div>
                 <div>
                     <label>性別    </label>
-                    <input type="radio"name="gender"value="男"<?php if($_SESSION['gender']=="男"){echo "checked";} elseif( $row['gender']=="0"){echo "checked";}?>>男
-                    <input type="radio"name="gender"value="女"<?php if($_SESSION['gender']=="女"){echo "checked";} elseif($row['gender']=="1"){echo "checked";}?>>女
+                    <input type="radio"name="gender"value="男"<?php if($_POST['gender']=="男"){echo "checked";} elseif( $row['gender']=="0"){echo "checked";}?>>男
+                    <input type="radio"name="gender"value="女"<?php if($_POST['gender']=="女"){echo "checked";} elseif($row['gender']=="1"){echo "checked";}?>>女
                 </div>
                 <div>
                     <label>郵便番号　　</label>
-                    <input type="text"class="text"size="10"name="postalcode"maxlength="7"pattern="\d*"value="<?php if(!empty($_SESSION['postalcode'])) {echo $_SESSION['postalcode'];} else {echo $row['postal_code'];}?>">
+                    <input type="text"class="text"size="10"name="postalcode"maxlength="7"pattern="\d*"value="<?php echo $row['postal_code'];?>">
                     <?php if(!empty($error['postalcode']) && empty($_SESSION['postalcode'])): ?>
                     <div class="error"><?php echo "*郵便番号を入力してください*"; ?></div>
                     <?php endif; ?>
@@ -194,14 +189,14 @@ echo $_SESSION['id'];
                 </div>
                 <div>
                     <label>住所（市区町村）　　</label>
-                    <input type="text"class="text"size="20"name="shikutyouson"maxlength="10"pattern="^[^A-Za-z]+$"value="<?php if(!empty($_SESSION['shikutyouson'])) {echo $_SESSION['shikutyouson'];} else {echo $row['address_1'];}?>">
+                    <input type="text"class="text"size="20"name="shikutyouson"maxlength="10"pattern="^[^A-Za-z]+$"value="<?php echo $row['address_1'];?>">
                     <?php if(!empty($error['shikutyouson']) && empty($_SESSION['shikutyouson'])): ?>
                     <div class="error"><?php echo "*住所（市区町村）を入力してください*"; ?></div>
                     <?php endif; ?>
                 </div>
                 <div>
                     <label>住所（番地）  </label>
-                    <input type="text"class="text"size="20"name="banchi"maxlength="100"patttern="^[^A-Za-z]+$"value="<?php if(!empty($_SESSION['banchi'])) {echo $_SESSION['banchi'];} else {echo $row['address_2'];}?>">
+                    <input type="text"class="text"size="20"name="banchi"maxlength="100"patttern="^[^A-Za-z]+$"value="<?php echo $row['address_2'];?>">
                     <?php if(!empty($error['banchi']) && empty($_SESSION['banchi'])): ?>
                     <div class="error"><?php echo "*住所（番地）を入力してください*"; ?></div>
                     <?php endif; ?>
