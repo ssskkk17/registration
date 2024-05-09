@@ -1,46 +1,3 @@
-<?php
-$error=[];
-session_start();
-echo $_SESSION['id'];
-
-if($_POST['familyname']=="") {
-    header("Location:update.php");
-    exit();
-}
-if($_POST['lastname']=="") {
-    header("Location:update.php");
-    exit();
-}
-if($_POST['kana_family']=="") {
-    header("Location:update.php");
-    exit();
-}
-if($_POST['kana_name']=="") {
-    header("Location:update.php");
-    exit();
-}
-if($_POST['mail']=="") {
-    header("Location:update.php");
-    exit();
-}
-if($_POST['postalcode']=="") {
-    header("Location:update.php");
-    exit();
-}
-if($_POST['shikutyouson']=="") {
-    header("Location:update.php");
-    exit();
-}
-if($_POST['banchi']=="") {
-    header("Location:update.php");
-    exit();
-}
-if($_POST['authority']=="") {
-    header("Location:update.php");
-    exit();
-}
-?>
-
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -154,6 +111,7 @@ if($_POST['authority']=="") {
                 <div class="send">
                     <input type="submit"name="send"value="更新する">
                 </div>
+                <input type="hidden"value="<?php echo $_POST['id'];?>" name="id">
                 <input type="hidden"value="<?php echo $_POST['familyname'];?>" name="familyname">
                 <input type="hidden"value="<?php echo $_POST['lastname'];?>" name="lastname">
                 <input type="hidden"value="<?php echo $_POST['kana_family'];?>" name="kana_family">
@@ -169,6 +127,7 @@ if($_POST['authority']=="") {
             <div class="back">
                 <form method="post"action="update.php">
                     <input type="submit"value="前に戻る">
+                    <input type="hidden"value="<?php echo $_POST['id'];?>" name="id">
                     <input type="hidden"value="<?php echo $_POST['familyname'];?>" name="familyname">
                     <input type="hidden"value="<?php echo $_POST['lastname'];?>" name="lastname">
                     <input type="hidden"value="<?php echo $_POST['kana_family'];?>" name="kana_family">

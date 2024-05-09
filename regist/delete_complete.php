@@ -2,9 +2,10 @@
 session_start();
 mb_internal_encoding("utf8");
 $id=$_SESSION['id'];
+$update_time=date('Y-m-d h:i:s');
 try {
     $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root", "");
-    $pdo->exec("update regist_user set delete_flag='1' where id=$id");
+    $pdo->exec("update regist_user set delete_flag='1', update_time='$update_time' where id=$id");
 } catch(PDOException) {
     header('Location:error.html');
     exit();
@@ -66,7 +67,7 @@ try {
         </main>
         <footer></footer>
     </body>
+    <?php
+    session_destroy();
+    ?>
 </html>
-<?php 
-session_destroy();
-?>

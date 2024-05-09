@@ -1,6 +1,5 @@
 <?php
-session_start();
-$id=$_SESSION['id'];
+$id=$_POST['id'];
 mb_internal_encoding("utf8");
 $familyname=$_POST['familyname'];
 $lastname=$_POST['lastname'];
@@ -58,4 +57,3 @@ try {
         <footer></footer>
     </body>
 </html>
-<?php session_destroy();?>

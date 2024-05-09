@@ -100,9 +100,10 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                         </a>
                     </td>
                     <td align='center'>
-                        <a href="update.php?id=<?php echo $row['id']?>">
+                        <form method="post"action="update.php">
                             <input type="submit"value="更新">
-                        </a>
+                            <input type="hidden"value="<?php echo $row['id'];?>" name="id">
+                        </form>
                     </td>
                 </tr>
                 <?php }; ?>
