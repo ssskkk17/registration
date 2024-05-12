@@ -44,6 +44,9 @@ try {
                 position: fixed;
                 bottom: 0px;
             }
+            form {
+                text-align: center;
+            }
         </style>
     </head>
     

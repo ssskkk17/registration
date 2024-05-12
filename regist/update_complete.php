@@ -6,7 +6,6 @@ $lastname=$_POST['lastname'];
 $kana_family=$_POST['kana_family'];
 $kana_name=$_POST['kana_name'];
 $mail=$_POST['mail'];
-$passhash=password_hash($_POST['password'], PASSWORD_DEFAULT);
 if($_POST['gender']=="男") {
     $gender=0;
 } else {
@@ -24,12 +23,22 @@ if($_POST['authority']=="一般") {
 $delete_flag=0;
 date_default_timezone_set('Asia/Tokyo');
 $update_time=date('Y-m-d h:i:s');
-try {
-    $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root", "");
-    $pdo->exec("update regist_user set family_name='$familyname', last_name='$lastname', family_name_kana='$kana_family', last_name_kana='$kana_name', mail='$mail', password='$passhash', gender='$gender', postal_code='$postalcode', prefecture='$pre', address_1='$address_1', address_2='$address_2', authority='$authority', delete_flag='$delete_flag', update_time='$update_time' where id=$id");
-} catch(PDOException) {
-    header('Location:error.html');
-    exit();
+if(empty($_POST['password'])) {
+    try {
+        $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root", "");
+        $pdo->exec("update regist_user set family_name='$familyname', last_name='$lastname', family_name_kana='$kana_family', last_name_kana='$kana_name', mail='$mail', gender='$gender', postal_code='$postalcode', prefecture='$pre', address_1='$address_1', address_2='$address_2', authority='$authority', delete_flag='$delete_flag', update_time='$update_time' where id=$id"); 
+    } catch(PDOException) {
+        header('Location:error.html');
+        exit();
+    }
+}else{
+    try {
+        $passhash=password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root", "");$pdo->exec("update regist_user set family_name='$familyname', last_name='$lastname', family_name_kana='$kana_family', last_name_kana='$kana_name', mail='$mail', password='$passhash', gender='$gender', postal_code='$postalcode', prefecture='$pre', address_1='$address_1', address_2='$address_2', authority='$authority', delete_flag='$delete_flag', update_time='$update_time' where id=$id");
+    } catch(PDOException) {
+        header('Location:error.html');
+        exit();
+    }
 };
 ?>
 <!DOCTYPE html>

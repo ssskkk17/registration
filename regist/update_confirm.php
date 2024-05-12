@@ -18,6 +18,9 @@
             list-style-type: none;
             padding-left: 20px;  
         }
+        .msg {
+            color: red;
+        }
         form {
             margin: 0 auto;
             width: 500px;
@@ -29,6 +32,14 @@
             display: inline-block;
             width: 150px;
             vertical-align: top;
+        }
+        form .send {
+            float: right;
+            margin-right: 150px;
+        }
+        form .back {
+            float: left;
+            margin-left: 100px;
         }
         footer {
             clear: both;
@@ -81,6 +92,7 @@
                     <?php $pass=$_POST['password'];
                     echo str_repeat('●', strlen($pass)), PHP_EOL;
                     ?>
+                    <p class="msg">*パスワードが未入力の場合はパスワード変更されません*</p>
                 </div>
                 <div>
                     <label>性別　　</label>
@@ -92,7 +104,7 @@
                 </div>
                 <div>
                     <label>住所（都道府県）　　</label>
-                    <?php echo htmlspecialchars($_POST['pre']); ?>
+                    <?php echo $_POST['pre'];?>
                 </div>
                 <div>
                     <label>住所（市区町村）　　</label>
@@ -110,23 +122,7 @@
                 <br>
                 <div class="send">
                     <input type="submit"name="send"value="更新する">
-                </div>
-                <input type="hidden"value="<?php echo $_POST['id'];?>" name="id">
-                <input type="hidden"value="<?php echo $_POST['familyname'];?>" name="familyname">
-                <input type="hidden"value="<?php echo $_POST['lastname'];?>" name="lastname">
-                <input type="hidden"value="<?php echo $_POST['kana_family'];?>" name="kana_family">
-                <input type="hidden"value="<?php echo $_POST['kana_name'];?>" name="kana_name">
-                <input type="hidden"value="<?php echo $_POST['mail'];?>" name="mail">
-                <input type="hidden"value="<?php echo $_POST['password'];?>" name="password">
-                <input type="hidden"value="<?php echo $_POST['gender'];?>" name="gender">
-                <input type="hidden"value="<?php echo $_POST['postalcode'];?>" name="postalcode">
-                <input type="hidden"value="<?php echo $_POST['shikutyouson'];?>" name="shikutyouson">
-                <input type="hidden"value="<?php echo $_POST['banchi'];?>" name="banchi">
-                <input type="hidden"value="<?php echo $_POST['authority'];?>" name="authority">
-            </form>
-            <div class="back">
-                <form method="post"action="update.php">
-                    <input type="submit"value="前に戻る">
+                    </div>
                     <input type="hidden"value="<?php echo $_POST['id'];?>" name="id">
                     <input type="hidden"value="<?php echo $_POST['familyname'];?>" name="familyname">
                     <input type="hidden"value="<?php echo $_POST['lastname'];?>" name="lastname">
@@ -136,6 +132,24 @@
                     <input type="hidden"value="<?php echo $_POST['password'];?>" name="password">
                     <input type="hidden"value="<?php echo $_POST['gender'];?>" name="gender">
                     <input type="hidden"value="<?php echo $_POST['postalcode'];?>" name="postalcode">
+                    <input type="hidden"value="<?php echo $_POST['pre'];?>" name="pre">
+                    <input type="hidden"value="<?php echo $_POST['shikutyouson'];?>" name="shikutyouson">
+                    <input type="hidden"value="<?php echo $_POST['banchi'];?>" name="banchi">
+                    <input type="hidden"value="<?php echo $_POST['authority'];?>" name="authority">
+                    </form>
+                <div class="back">
+                <form method="post"action="update.php">
+                    <input type="submit"name="back"value="前に戻る">
+                    <input type="hidden"value="<?php echo $_POST['id'];?>" name="id">
+                    <input type="hidden"value="<?php echo $_POST['familyname'];?>" name="familyname">
+                    <input type="hidden"value="<?php echo $_POST['lastname'];?>" name="lastname">
+                    <input type="hidden"value="<?php echo $_POST['kana_family'];?>" name="kana_family">
+                    <input type="hidden"value="<?php echo $_POST['kana_name'];?>" name="kana_name">
+                    <input type="hidden"value="<?php echo $_POST['mail'];?>" name="mail">
+                    <input type="hidden"value="<?php echo $_POST['password'];?>" name="password">
+                    <input type="hidden"value="<?php echo $_POST['gender'];?>" name="gender">
+                    <input type="hidden"value="<?php echo $_POST['postalcode'];?>" name="postalcode">
+                    <input type="hidden"value="<?php echo $_POST['pre'];?>" name="pre">
                     <input type="hidden"value="<?php echo $_POST['shikutyouson'];?>" name="shikutyouson">
                     <input type="hidden"value="<?php echo $_POST['banchi'];?>" name="banchi">
                     <input type="hidden"value="<?php echo $_POST['authority'];?>" name="authority">
