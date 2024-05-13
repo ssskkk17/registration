@@ -1,7 +1,6 @@
 <?php
-session_start();
 mb_internal_encoding("utf8");
-$id=$_SESSION['id'];
+$id=$_POST['id'];
 $update_time=date('Y-m-d h:i:s');
 try {
     $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root", "");
@@ -70,7 +69,4 @@ try {
         </main>
         <footer></footer>
     </body>
-    <?php
-    session_destroy();
-    ?>
 </html>

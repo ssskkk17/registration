@@ -95,9 +95,10 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                             echo date('Y/m/d', $ts_2);}?>
                     </td>
                     <td align='center'>
-                        <a href="delete.php?id=<?php echo $row['id']?>">
+                        <form method="post"action="delete.php">
                             <input type="submit"value="削除">
-                        </a>
+                            <input type="hidden"value="<?php echo $row['id'];?>" name="id">
+                        </form>
                     </td>
                     <td align='center'>
                         <form method="post"action="update.php">
