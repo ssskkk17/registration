@@ -99,12 +99,6 @@ $stmt=$pdo->query("select * from regist_user where id=$id");
                     echo $_SESSION['mail']; ?>        
                 </div>
                 <div>
-                    <label>パスワード　　</label>
-                    <?php $_SESSION['password']=$row['password'];
-                    echo str_repeat('●', strlen($_SESSION['password'])), PHP_EOL;
-                    ?>
-                </div>
-                <div>
                     <label>性別　　</label>
                     <?php $_SESSION['gender']=$row['gender'];
                      if($_SESSION['gender']=="0") {

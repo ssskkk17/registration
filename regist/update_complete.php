@@ -52,6 +52,9 @@ if(empty($_POST['password'])) {
                 color: red;
                 font-size: 50px;
             }
+            form {
+                text-align: center;
+            }
         </style>
     </head>
     <body>
