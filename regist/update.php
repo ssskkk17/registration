@@ -141,12 +141,12 @@ if($_POST) {
                 </div>
                 <div>
                     <label>性別    </label>
-                    <input type="radio"name="gender"value="男"<?php if(!empty($_POST['gender']) && $_POST['gender']=="男"){echo 'checked';} elseif($row['gender']=="0"){echo 'checked';}?>>男
-                    <input type="radio"name="gender"value="女"<?php if(!empty($_POST['gender']) && $_POST['gender']=="女"){echo 'checked';} elseif($row['gender']=="1"){echo 'checked';}?>>女
+                    <input type="radio"name="gender"value="男"<?php if(!empty($_POST['gender']) && $_POST['gender']=="男"){echo 'checked';} elseif(empty($_POST['back']) && empty($_POST['confirm']) && $row['gender']=="0"){echo 'checked';}?>>男
+                    <input type="radio"name="gender"value="女"<?php if(!empty($_POST['gender']) && $_POST['gender']=="女"){echo 'checked';} elseif(empty($_POST['back']) && empty($_POST['confirm']) && $row['gender']=="1"){echo 'checked';}?>>女
                 </div>
                 <div>
                     <label>郵便番号　　</label>
-                    <input type="text"class="text"size="10"name="postalcode"maxlength="7"pattern="\d*"value="<?php if(!empty($_POST['postalcode'])){echo $_POST['postalcode'];} elseif(!empty($_POST['postalcode']) && !empty($error['postalcode'])){echo "";} else {echo $row['postal_code'];}?>">
+                    <input type="text"class="text"size="10"name="postalcode"maxlength="7"pattern="\d*"value="<?php if(!empty($_POST['postalcode'])){echo $_POST['postalcode'];} elseif(!empty($_POST['confirm']) && !empty($error['postalcode'])){echo "";} else {echo $row['postal_code'];}?>">
                     <?php if(!empty($error['postalcode']) && !empty($_POST['confirm'])): ?>
                     <div class="error"><?php echo "*郵便番号を入力してください*"; ?></div>
                     <?php endif; ?>
@@ -222,8 +222,8 @@ if($_POST) {
                 <div>
                     <label>アカウント権限　　</label>
                     <select class="dropdown"name="authority">
-                        <option value="一般"<?php if(!empty($_POST['authority']) && $_POST['authority']=="一般"){echo "selected";} elseif($row['authority']=="0"){echo "selected";}?>>一般</option>
-                        <option value="管理者"<?php if(!empty($_POST['authority']) && $_POST['authority']=="管理者"){echo "selected";} elseif($row['authority']=="1"){echo "selected";}?>>管理者</option>
+                        <option value="一般"<?php if(!empty($_POST['authority']) && $_POST['authority']=="一般"){echo "selected";}elseif(empty($_POST['back']) && empty($_POST['confirm']) && $row['authority']=="0"){echo "selected";}?>>一般</option>
+                        <option value="管理者"<?php if(!empty($_POST['authority']) && $_POST['authority']=="管理者"){echo "selected";}elseif(empty($_POST['back']) && empty($_POST['confirm']) && $row['authority']=="1"){echo "selected";}?>>管理者</option>
                     </select>
                 </div>
                 <br>
