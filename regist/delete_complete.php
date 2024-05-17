@@ -63,7 +63,7 @@ try {
         <main>
             <h1>アカウント削除完了画面</h1>
             <p>削除が完了しました。</p>
-            <form method="post"action="index.html">
+            <form method="post"action="index.php">
                 <input type="submit"class="back"value="TOPへ戻る">
             </form>
         </main>
