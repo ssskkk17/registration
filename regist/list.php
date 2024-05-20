@@ -1,7 +1,39 @@
 <?php
 mb_internal_encoding("utf8");
 $pdo=new PDO("mysql:dbname=regist; host=localhost;", "root", "");
-$stmt=$pdo->query("select * from regist_user order by id desc");
+if(!empty($_POST['familyname'])) {
+    $familyname=$_POST['familyname'];
+}
+if(!empty($_POST['lastname'])) {
+    $lastname=$_POST['lastname'];
+}
+if(!empty($_POST['kana_family'])) {
+    $kana_family=$_POST['kana_family'];
+}
+if(!empty($_POST['kana_name'])) {
+    $kana_name=$_POST['kana_name'];
+}
+if(!empty($_POST['mail'])) {
+    $mail=$_POST['mail'];
+}
+if(!empty($_POST['gender'])) {
+    $gender=$_POST['gender'];
+}
+if(!empty($_POST['authority'])) {
+    $authority=$_POST['authority'];
+}
+if(!empty($_POST['check'])) {
+    if(!empty($familyname)) {
+        $stmt=$pdo->query("select * from regist_user where family_name LIKE '%$familyname%' order by id desc");
+        if(!empty($lastname)) {
+            $stmt=$pdo->query("select * from regist_user where family_name LIKE '%$familyname%' AND last_name LIKE '%$lastname%' order by id desc");
+        }
+    }elseif(!empty($lastname)) {
+        $stmt=$pdo->query("select * from regist_user where last_name LIKE '%$lastname%' order by id desc");
+    }else{
+        $stmt=$pdo->query("select * from regist_user order by id desc");
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -33,11 +65,18 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
             }
             table td {
                 padding: 0auto;
+                text-align: center;
+            }
+            .check {
+                padding-right:10px;
+                float: right;
+                margin-right: 75px;
             }
             footer {
                 background-color: black;
                 height: 50px;
                 width: 100%;
+                position: fixed;
                 bottom: 0px;
             }
         </style>
@@ -57,15 +96,53 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
         
         <main>
             <h2>アカウント一覧</h2>
+            <form method="post"action="">
+                <table class="firsttable"border="1"cellspacing="0">
+                    <tr>
+                        <th>名前（姓）</th>
+                        <td><input type="text"size="20"name="familyname"></td>
+                        <th>名前（名）</th>
+                        <td><input type="text"size="20"name="lastname"></td>
+                    </tr>
+                    <tr>
+                        <th>カナ（姓）</th>
+                        <td><input type="text"size="20"name="kana_family"></td>
+                        <th>カナ（名）</th>
+                        <td><input type="text"size="20"name="kana_name"></td>
+                    </tr>
+                    <tr>
+                        <th>メールアドレス</th>
+                        <td><input type="email"size="20"name="mail"></td>
+                        <th>性別</th>
+                        <td>
+                            <input type="radio"name="gender"value="男"checked>男
+                            <input type="radio"name="gender"value="女">女
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>アカウント権限</th>
+                        <td>
+                            <select class="dropdown"name="authority">
+                                <option value="一般"selected>一般</option>
+                                <option value="管理者">管理者</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit"class="check"name="check"value="検索">
+            </form>
             <br>
             <br>
+            <?php
+            if(!empty($_POST['check'])) {?>
             <table border="1"cellspacing="0">
                 <tr>
                     <th>ID</th>
                     <th>名前（姓）</th>
                     <th>名前（名）</th>
                     <th>カナ（姓）</th>
-                    <th>カナ（名）</th><th>メールアドレス</th>
+                    <th>カナ（名）</th>
+                    <th>メールアドレス</th>
                     <th>性別</th>
                     <th>アカウント権限</th>
                     <th>削除フラグ</th>
@@ -107,6 +184,7 @@ $stmt=$pdo->query("select * from regist_user order by id desc");
                         </form>
                     </td>
                 </tr>
+                <?php }; ?>
                 <?php }; ?>
             </table>
         </main>
