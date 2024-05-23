@@ -1,6 +1,13 @@
 <?php
 mb_internal_encoding("utf8");
 $pdo=new PDO("mysql:dbname=regist; host=localhost;", "root", "");
+$familyname='';
+$lastname='';
+$kana_family='';
+$kana_name='';
+$mail='';
+$gender='';
+$authority='';
 if(!empty($_POST['familyname'])) {
     $familyname=$_POST['familyname'];
 }
@@ -16,23 +23,18 @@ if(!empty($_POST['kana_name'])) {
 if(!empty($_POST['mail'])) {
     $mail=$_POST['mail'];
 }
-if(!empty($_POST['gender'])) {
-    $gender=$_POST['gender'];
+if(!empty($_POST['gender']) && $_POST['gender']=="男") {
+    $gender=0;
+}else{
+    $gender=1;
 }
-if(!empty($_POST['authority'])) {
-    $authority=$_POST['authority'];
+if(!empty($_POST['authority']) && $_POST['authority']=="一般") {
+    $authority=0;
+}else{
+    $authority=1;
 }
 if(!empty($_POST['check'])) {
-    if(!empty($familyname)) {
-        $stmt=$pdo->query("select * from regist_user where family_name LIKE '%$familyname%' order by id desc");
-        if(!empty($lastname)) {
-            $stmt=$pdo->query("select * from regist_user where family_name LIKE '%$familyname%' AND last_name LIKE '%$lastname%' order by id desc");
-        }
-    }elseif(!empty($lastname)) {
-        $stmt=$pdo->query("select * from regist_user where last_name LIKE '%$lastname%' order by id desc");
-    }else{
-        $stmt=$pdo->query("select * from regist_user order by id desc");
-    }
+    $stmt=$pdo->query("select * from regist_user where family_name LIKE '%$familyname%' AND last_name LIKE '%$lastname%' AND family_name_kana LIKE '%$kana_family%' AND last_name_kana LIKE '%$kana_name' AND mail LIKE '%$mail%' AND gender='$gender' AND authority='$authority' order by id desc");
 }
 ?>
 
@@ -112,7 +114,7 @@ if(!empty($_POST['check'])) {
                     </tr>
                     <tr>
                         <th>メールアドレス</th>
-                        <td><input type="email"size="20"name="mail"></td>
+                        <td><input type="text"size="20"name="mail"></td>
                         <th>性別</th>
                         <td>
                             <input type="radio"name="gender"value="男"checked>男

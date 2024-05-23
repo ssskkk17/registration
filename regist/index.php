@@ -1,31 +1,9 @@
-<?php 
-if($_POST) {
-    if(empty($_POST['mail'])) {
-        header('Location:login.php');
-        exit();
-    }
-}
-?>
 <?php
-mb_internal_encoding("utf8");
-$mail=$_POST['mail'];
-$pass=$_POST['password'];
-try {
-    $pdo=new PDO("mysql:dbname=regist; host=localhost;", "root", "");
-    $stmt=$pdo->query("select * from regist_user where mail='$mail'");
-    $row=$stmt->fetch();
-    foreach($stmt as $row);
-    $hash=$row['password'];
-}catch(PDOException $e) {
-    header('Location:error.html');
-    exit();
-}
-if(password_verify($pass, $hash)) {
-    echo $row['family_name'].$row['last_name'];
+session_start();
+if(!empty($_SESSION['mail']) && !empty($_SESSION['password'])) {
+    echo $_SESSION['familyname'].$_SESSION['lastname'];
     echo "さん、ログインしました！";
-} else {
-    header('Location:login.php');
-} 
+}
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +75,7 @@ if(password_verify($pass, $hash)) {
                 <li>登録フォーム</li>
                 <li>その他</li>
                 <?php
-                if(!empty($row) && $row['authority']=='1') {
+                if(!empty($_SESSION) && $_SESSION['authority']=='1') {
                     echo "<li>";
                     echo "<a href='regist.php'>アカウント登録</a>";
                     echo "</li>";
