@@ -1,4 +1,10 @@
 <?php
+session_start();
+if(!empty($_SESSION) && $_SESSION['authority']=="0") {
+    header('Location:index.php');
+}
+?>
+<?php
 $id=$_POST['id'];
 ?>
 <?php 

@@ -1,4 +1,10 @@
 <?php
+session_start();
+if(!empty($_SESSION) && $_SESSION['authority']=="0") {
+    header('Location:index.php');
+}
+?>
+<?php
 mb_internal_encoding("utf8");
 $pdo=new PDO("mysql:dbname=regist; host=localhost;", "root", "");
 $familyname='';
@@ -6,8 +12,6 @@ $lastname='';
 $kana_family='';
 $kana_name='';
 $mail='';
-$gender='';
-$authority='';
 if(!empty($_POST['familyname'])) {
     $familyname=$_POST['familyname'];
 }
@@ -23,18 +27,22 @@ if(!empty($_POST['kana_name'])) {
 if(!empty($_POST['mail'])) {
     $mail=$_POST['mail'];
 }
-if(!empty($_POST['gender']) && $_POST['gender']=="男") {
-    $gender=0;
-}else{
-    $gender=1;
+if(isset($_POST['gender']) && $_POST['gender']==0 or $_POST['gender']==1) {
+    $gender=$_POST['gender'];
 }
-if(!empty($_POST['authority']) && $_POST['authority']=="一般") {
-    $authority=0;
-}else{
-    $authority=1;
+if(isset($_POST['auth']) && $_POST['auth']==0 or $_POST['auth']==1) {
+    $auth=$_POST['auth'];
 }
 if(!empty($_POST['check'])) {
-    $stmt=$pdo->query("select * from regist_user where family_name LIKE '%$familyname%' AND last_name LIKE '%$lastname%' AND family_name_kana LIKE '%$kana_family%' AND last_name_kana LIKE '%$kana_name' AND mail LIKE '%$mail%' AND gender='$gender' AND authority='$authority' order by id desc");
+    if(isset($gender) && isset($auth)) {
+        $stmt=$pdo->query("select * from regist_user where family_name LIKE '%$familyname%' AND last_name LIKE '%$lastname%' AND family_name_kana LIKE '%$kana_family%' AND last_name_kana LIKE '%$kana_name' AND mail LIKE '%$mail%' AND gender='$gender' AND authority='$auth' order by id desc");
+    }elseif(isset($gender)) {
+        $stmt=$pdo->query("select * from regist_user where family_name LIKE '%$familyname%' AND last_name LIKE '%$lastname%' AND family_name_kana LIKE '%$kana_family%' AND last_name_kana LIKE '%$kana_name' AND mail LIKE '%$mail%' AND gender='$gender' order by id desc");
+    }elseif(isset($auth)) {
+        $stmt=$pdo->query("select * from regist_user where family_name LIKE '%$familyname%' AND last_name LIKE '%$lastname%' AND family_name_kana LIKE '%$kana_family%' AND last_name_kana LIKE '%$kana_name' AND mail LIKE '%$mail%' AND authority='$auth' order by id desc");
+    }else{
+        $stmt=$pdo->query("select * from regist_user where family_name LIKE '%$familyname%' AND last_name LIKE '%$lastname%' AND family_name_kana LIKE '%$kana_family%' AND last_name_kana LIKE '%$kana_name' AND mail LIKE '%$mail%' order by id desc");
+    }
 }
 ?>
 
@@ -117,16 +125,18 @@ if(!empty($_POST['check'])) {
                         <td><input type="text"size="20"name="mail"></td>
                         <th>性別</th>
                         <td>
-                            <input type="radio"name="gender"value="男"checked>男
-                            <input type="radio"name="gender"value="女">女
+                            <input type="radio"name="gender"checked>未選択
+                            <input type="radio"name="gender"value="0">男
+                            <input type="radio"name="gender"value="1">女
                         </td>
                     </tr>
                     <tr>
                         <th>アカウント権限</th>
                         <td>
-                            <select class="dropdown"name="authority">
-                                <option value="一般"selected>一般</option>
-                                <option value="管理者">管理者</option>
+                            <select class="dropdown"name="auth">
+                                <option selected>未選択</option>
+                                <option value="0">一般</option>
+                                <option value="1">管理者</option>
                             </select>
                         </td>
                     </tr>
