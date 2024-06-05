@@ -66,6 +66,9 @@ try {
             <form method="post"action="index.php">
                 <input type="submit"class="back"value="TOPへ戻る">
             </form>
+            <form method="post"action="logout.php">
+                <input type="submit"value="ログアウト">
+            </form>
         </main>
         <footer></footer>
     </body>

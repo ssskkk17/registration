@@ -15,7 +15,7 @@ if(empty($error)) {
     $deleteflag=0;
     $registered_time=date('Y-m-d h:i:s');
     try {
-        $pdo = new PDO("mysql:dbname=regist;host=localhost;", "root", "");
+        $pdo = new PDO("mysql:dbname=regiaaaast;host=localhost;", "root", "");
         $pdo ->exec("insert into regist_user(family_name,last_name, family_name_kana, last_name_kana, mail, password, gender, postal_code, prefecture, address_1, address_2, authority, delete_flag, registered_time) values('".$_POST['familyname']."', '".$_POST['lastname']."', '".$_POST['kana_family']."', '".$_POST['kana_name']."', '".$_POST['mail']."', '$passhash', '$gender', '".$_POST['postalcode']."', '".$_POST['pre']."', '".$_POST['shikutyouson']."', '".$_POST['banchi']."', '$authority', '$deleteflag', '$registered_time');");
     } catch(PDOException) {
         $err=1;
@@ -52,7 +52,10 @@ if(empty($error)) {
                                     echo "登録完了しました";
                                     echo "</h1>";}?>
             <form method="post"action="index.php">
-            <input type="submit"class="submit"value="TOPページに戻る">
+                <input type="submit"class="submit"value="TOPページに戻る">
+            </form>
+            <form method="post"action="logout.php">
+                <input type="submit"value="ログアウト">
             </form>
         </main>
         <footer>

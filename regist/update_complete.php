@@ -23,6 +23,12 @@ if($_POST['authority']=="一般") {
 $delete_flag=0;
 date_default_timezone_set('Asia/Tokyo');
 $update_time=date('Y-m-d h:i:s');
+if(!empty($authority) && $authority=1) {
+    $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root", "");
+    $pdo->exec("update regist_user set family_name='$familyname', last_name='$lastname', family_name_kana='$kana_family', last_name_kana='$kana_name', mail='$mail', gender='$gender', postal_code='$postalcode', prefecture='$pre', address_1='$address_1', address_2='$address_2', authority='$authority', delete_flag='$delete_flag', update_time='$update_time' where id=$id");
+    header('Location:login.php');
+    exit();
+}
 if(empty($_POST['password'])) {
     try {
         $pdo=new PDO("mysql:dbname=regist;host=localhost;", "root", "");
@@ -63,7 +69,10 @@ if(empty($_POST['password'])) {
             <h1>アカウント更新完了画面</h1>
             <p>更新が完了しました。</p>
             <form method="post"action="index.php">
-            <input type="submit"value="TOPに戻る">
+                <input type="submit"value="TOPに戻る">
+            </form>
+            <form method="post"action="logout.php">
+                <input type="submit"value="ログアウト">
             </form>
         </main>
         <footer></footer>

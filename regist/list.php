@@ -27,11 +27,13 @@ if(!empty($_POST['kana_name'])) {
 if(!empty($_POST['mail'])) {
     $mail=$_POST['mail'];
 }
-if(isset($_POST['gender']) && $_POST['gender']==0 or $_POST['gender']==1) {
+if(!empty($_POST['check'])) {
+    if(isset($_POST['gender']) and $_POST['gender']==0 or $_POST['gender']==1) {
     $gender=$_POST['gender'];
-}
-if(isset($_POST['auth']) && $_POST['auth']==0 or $_POST['auth']==1) {
+    }
+    if(isset($_POST['auth']) && $_POST['auth']==0 or $_POST['auth']==1) {
     $auth=$_POST['auth'];
+    }
 }
 if(!empty($_POST['check'])) {
     if(isset($gender) && isset($auth)) {
